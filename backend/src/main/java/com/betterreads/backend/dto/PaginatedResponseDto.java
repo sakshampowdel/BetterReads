@@ -2,14 +2,14 @@ package com.betterreads.backend.dto;
 
 import java.util.List;
 
-public class PaginatedResponseDto {
-    private List<BookResponseDto> data;
+public class PaginatedResponseDto<T> {
+    private List<T> data;
     private int page;
     private int size;
     private int totalPages;
     private Long totalElements;
 
-    public PaginatedResponseDto(List<BookResponseDto> data, int page, int size, int totalPages, Long totalElements) {
+    public PaginatedResponseDto(List<T> data, int page, int size, int totalPages, Long totalElements) {
         this.data = data;
         this.page = page;
         this.size = size;
@@ -17,7 +17,7 @@ public class PaginatedResponseDto {
         this.totalElements = totalElements;
     }
 
-    public List<BookResponseDto> getData() {
+    public List<T> getData() {
         return data;
     }
 
