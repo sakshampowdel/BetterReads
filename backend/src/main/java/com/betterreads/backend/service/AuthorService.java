@@ -1,10 +1,17 @@
 package com.betterreads.backend.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.betterreads.backend.dto.AuthorRequestDto;
 import com.betterreads.backend.dto.AuthorResponseDto;
+import com.betterreads.backend.dto.BookRequestDto;
+import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.AuthorNotFoundException;
 import com.betterreads.backend.model.Author;
 import com.betterreads.backend.repository.AuthorRepository;
@@ -24,6 +31,31 @@ public class AuthorService {
         }
 
         return mapToResponseDto(author.get());
+    }
+
+    public PaginatedResponseDto<AuthorResponseDto> getAllAuthors(Pageable pageable) {
+        Page<Author> page = authorRepository.findAll(pageable);
+        List<Author> authors = page.getContent();
+        List<AuthorResponseDto> authorResponseDtos = new ArrayList<>();
+
+        for (Author author: authors) {
+            authorResponseDtos.add(mapToResponseDto(author));
+        }
+
+        PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = new PaginatedResponseDto<>(authorResponseDtos, page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
+
+        return paginatedResponseDto;
+    }
+
+    public AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto) {
+        return null;
+    }
+
+    public AuthorResponseDto updateAuthorById(Long id, BookRequestDto bookRequestDto) {
+        return null;
+    }
+
+    public void deleteAuthorById(Long id) {
     }
 
     public AuthorResponseDto mapToResponseDto(Author author) {
