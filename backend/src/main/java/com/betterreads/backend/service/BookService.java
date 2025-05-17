@@ -41,9 +41,9 @@ public class BookService {
             bookResponseDtos.add(mapToResponseDto(book));
         }
 
-        PaginatedResponseDto<BookResponseDto> pageDto = new PaginatedResponseDto<>(bookResponseDtos, page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
+        PaginatedResponseDto<BookResponseDto> paginatedResponseDto = new PaginatedResponseDto<>(bookResponseDtos, page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
         
-        return pageDto;
+        return paginatedResponseDto;
     }
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
