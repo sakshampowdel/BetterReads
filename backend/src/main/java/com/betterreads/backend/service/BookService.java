@@ -41,4 +41,32 @@ public class BookService {
 
         return book;
     }
+
+    public Book updateBookById(Long id, BookRequestDto bookRequestDto) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isEmpty()) {
+            throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
+        }
+
+        String title = bookRequestDto.getTitle();
+        String author = bookRequestDto.getAuthor();
+        String isbn = bookRequestDto.getIsbn();
+
+        book.get().setTitle(title);
+        book.get().setAuthor(author);
+        book.get().setIsbn(isbn);
+
+        bookRepository.save(book.get());
+
+        return book.get();
+    }
+
+    public void deleteBookById(Long id) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isEmpty()) {
+            throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
+        }
+
+        bookRepository.deleteById(id);
+    }
 }
