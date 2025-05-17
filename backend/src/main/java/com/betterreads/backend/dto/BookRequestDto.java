@@ -1,8 +1,13 @@
 package com.betterreads.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class BookRequestDto {
+    @NotBlank
     private String title;
+    @NotBlank
     private String author;
+    @NotBlank
     private String isbn;
 
     public BookRequestDto(String title, String author, String isbn) {
