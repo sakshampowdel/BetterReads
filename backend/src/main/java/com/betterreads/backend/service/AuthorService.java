@@ -14,7 +14,6 @@ import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.AuthorNotFoundException;
 import com.betterreads.backend.model.Author;
-import com.betterreads.backend.model.Book;
 import com.betterreads.backend.repository.AuthorRepository;
 
 @Service
