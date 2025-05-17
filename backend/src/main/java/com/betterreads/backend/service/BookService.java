@@ -1,11 +1,13 @@
 package com.betterreads.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.betterreads.backend.repository.BookRepository;
 import com.betterreads.backend.dto.BookRequestDto;
+import com.betterreads.backend.dto.BookResponseDto;
 import com.betterreads.backend.exception.BookNotFoundException;
 import com.betterreads.backend.model.Book;
 
@@ -17,20 +19,27 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book getBookById(Long id) {
+    public BookResponseDto getBookById(Long id) {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isEmpty()) {
             throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
         }
 
-        return book.get();
+        return mapToResponseDto(book.get());
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookResponseDto> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        List<BookResponseDto> responseDtos = new ArrayList<>();
+
+        for (Book book: books) {
+            responseDtos.add(mapToResponseDto(book));
+        }
+        
+        return responseDtos;
     }
 
-    public Book createBook(BookRequestDto bookRequestDto) {
+    public BookResponseDto createBook(BookRequestDto bookRequestDto) {
         String title = bookRequestDto.getTitle();
         String author = bookRequestDto.getAuthor();
         String isbn = bookRequestDto.getIsbn();
@@ -39,10 +48,10 @@ public class BookService {
 
         bookRepository.save(book);
 
-        return book;
+        return mapToResponseDto(book);
     }
 
-    public Book updateBookById(Long id, BookRequestDto bookRequestDto) {
+    public BookResponseDto updateBookById(Long id, BookRequestDto bookRequestDto) {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isEmpty()) {
             throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
@@ -58,7 +67,7 @@ public class BookService {
 
         bookRepository.save(book.get());
 
-        return book.get();
+        return mapToResponseDto(book.get());
     }
 
     public void deleteBookById(Long id) {
@@ -68,5 +77,9 @@ public class BookService {
         }
 
         bookRepository.deleteById(id);
+    }
+
+    public BookResponseDto mapToResponseDto(Book book) {
+        return new BookResponseDto(book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn());
     }
 }
