@@ -1,7 +1,7 @@
 package com.betterreads.backend.controller;
 
 import com.betterreads.backend.dto.BookRequestDto;
-import com.betterreads.backend.model.Book;
+import com.betterreads.backend.dto.BookResponseDto;
 import com.betterreads.backend.service.BookService;
 
 import jakarta.validation.Valid;
@@ -28,30 +28,30 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable Long id) {
-        Book book = bookService.getBookById(id);
-        return ResponseEntity.ok(book);
+    public ResponseEntity<BookResponseDto> getBook(@PathVariable Long id) {
+        BookResponseDto bookResponseDto = bookService.getBookById(id);
+        return ResponseEntity.ok(bookResponseDto);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Book>> getBooks() {
-        List<Book> list = bookService.getAllBooks();
-        return ResponseEntity.ok(list);
+    public ResponseEntity<List<BookResponseDto>> getBooks() {
+        List<BookResponseDto> bookResponseDtos = bookService.getAllBooks();
+        return ResponseEntity.ok(bookResponseDtos);
     }
 
     @PostMapping()
-    public ResponseEntity<Book> createBook(
+    public ResponseEntity<BookResponseDto> createBook(
         @Valid @RequestBody BookRequestDto bookRequestDto) {
-        Book book = bookService.createBook(bookRequestDto);
-        return ResponseEntity.status(201).body(book);
+        BookResponseDto bookResponseDto = bookService.createBook(bookRequestDto);
+        return ResponseEntity.status(201).body(bookResponseDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(
+    public ResponseEntity<BookResponseDto> updateBook(
         @PathVariable Long id,
         @Valid @RequestBody BookRequestDto bookRequestDto) {
-        Book book = bookService.updateBookById(id, bookRequestDto);
-        return ResponseEntity.ok(book);
+        BookResponseDto bookResponseDto = bookService.updateBookById(id, bookRequestDto);
+        return ResponseEntity.ok(bookResponseDto);
     }
 
     @DeleteMapping("/{id}")
