@@ -36,24 +36,25 @@ public class AuthorController {
     @GetMapping()
     public ResponseEntity<PaginatedResponseDto<AuthorResponseDto>> getAuthors(Pageable pageable) {
         PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = authorService.getAllAuthors(pageable);
-        return ResponseEntity.status(201).body(paginatedResponseDto);
+        return ResponseEntity.ok(paginatedResponseDto);
     }
 
     @PostMapping()
-    public ResponseEntity<AuthorResponseDto> createBook(
+    public ResponseEntity<AuthorResponseDto> createAuthor(
         @Valid @RequestBody AuthorRequestDto authorRequestDto) {
-        return null;
+        AuthorResponseDto authorResponseDto = authorService.createAuthor(authorRequestDto);
+        return ResponseEntity.status(201).body(authorResponseDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorResponseDto> updateBook(
+    public ResponseEntity<AuthorResponseDto> updateAuthor(
         @PathVariable Long id,
         @Valid @RequestBody AuthorRequestDto authorRequestDto) {
         return null;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         return null;
     }
 }
