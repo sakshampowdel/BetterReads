@@ -3,11 +3,15 @@ package com.betterreads.backend.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.betterreads.backend.repository.BookRepository;
 import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.BookResponseDto;
+import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.BookNotFoundException;
 import com.betterreads.backend.model.Book;
 
@@ -28,15 +32,18 @@ public class BookService {
         return mapToResponseDto(book.get());
     }
 
-    public List<BookResponseDto> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        List<BookResponseDto> responseDtos = new ArrayList<>();
+    public PaginatedResponseDto getAllBooks(Pageable pageable) {
+        Page<Book> page = bookRepository.findAll(pageable);
+        List<Book> books = page.getContent();
+        List<BookResponseDto> bookResponseDtos = new ArrayList<>();
 
         for (Book book: books) {
-            responseDtos.add(mapToResponseDto(book));
+            bookResponseDtos.add(mapToResponseDto(book));
         }
+
+        PaginatedResponseDto pageDto = new PaginatedResponseDto(bookResponseDtos,page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
         
-        return responseDtos;
+        return pageDto;
     }
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
