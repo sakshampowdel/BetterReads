@@ -14,6 +14,7 @@ import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.AuthorNotFoundException;
 import com.betterreads.backend.model.Author;
+import com.betterreads.backend.model.Book;
 import com.betterreads.backend.repository.AuthorRepository;
 
 @Service
@@ -48,7 +49,13 @@ public class AuthorService {
     }
 
     public AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto) {
-        return null;
+        String name = authorRequestDto.getName();
+        String openLibraryId = authorRequestDto.getOpenLibraryId();
+
+        Author author = new Author(name, openLibraryId);
+        authorRepository.save(author);
+
+        return mapToResponseDto(author);
     }
 
     public AuthorResponseDto updateAuthorById(Long id, BookRequestDto bookRequestDto) {
