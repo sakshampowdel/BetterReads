@@ -34,8 +34,8 @@ public class BookController {
     }
 
     @GetMapping()
-    public ResponseEntity<PaginatedResponseDto> getBooks(Pageable pageable) {
-        PaginatedResponseDto paginatedResponseDto = bookService.getAllBooks(pageable);
+    public ResponseEntity<PaginatedResponseDto<BookResponseDto>> getBooks(Pageable pageable) {
+        PaginatedResponseDto<BookResponseDto> paginatedResponseDto = bookService.getAllBooks(pageable);
         return ResponseEntity.ok(paginatedResponseDto);
     }
 
