@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.betterreads.backend.dto.AuthorRequestDto;
 import com.betterreads.backend.dto.AuthorResponseDto;
-import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.AuthorNotFoundException;
 import com.betterreads.backend.model.Author;
@@ -57,11 +56,28 @@ public class AuthorService {
         return mapToResponseDto(author);
     }
 
-    public AuthorResponseDto updateAuthorById(Long id, BookRequestDto bookRequestDto) {
-        return null;
+    public AuthorResponseDto updateAuthorById(Long id, AuthorRequestDto authorRequestDto) {
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isEmpty()) {
+            throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
+        }
+
+        String name = authorRequestDto.getName();
+        String openLibraryId = authorRequestDto.getOpenLibraryId();
+
+        author.get().setName(name);
+        author.get().setOpenLibraryId(openLibraryId);
+
+        return mapToResponseDto(author.get());
     }
 
     public void deleteAuthorById(Long id) {
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isEmpty()) {
+            throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
+        }
+
+        authorRepository.deleteById(id);
     }
 
     public AuthorResponseDto mapToResponseDto(Author author) {
