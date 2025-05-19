@@ -3,6 +3,7 @@ package com.betterreads.backend.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.BookResponseDto;
 import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.exception.BookNotFoundException;
+import com.betterreads.backend.model.Author;
 import com.betterreads.backend.model.Book;
 
 @Service
@@ -48,7 +50,7 @@ public class BookService {
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
         String title = bookRequestDto.getTitle();
-        String author = bookRequestDto.getAuthor();
+        Set<Author> author = bookRequestDto.getAuthor();
         String isbn = bookRequestDto.getIsbn();
 
         Book book = new Book(title, author, isbn);
@@ -65,7 +67,7 @@ public class BookService {
         }
 
         String title = bookRequestDto.getTitle();
-        String author = bookRequestDto.getAuthor();
+        Set<Author> author = bookRequestDto.getAuthor();
         String isbn = bookRequestDto.getIsbn();
 
         book.get().setTitle(title);
