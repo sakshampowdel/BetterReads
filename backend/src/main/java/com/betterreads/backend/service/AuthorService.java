@@ -50,6 +50,12 @@ public class AuthorService {
         String name = authorRequestDto.getName();
         String openLibraryId = authorRequestDto.getOpenLibraryId();
 
+        Optional<Author> duplicateAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
+
+        if (duplicateAuthor.isPresent()) {
+            return mapToResponseDto(duplicateAuthor.get());
+        }
+
         Author author = new Author(name, openLibraryId);
         authorRepository.save(author);
 
