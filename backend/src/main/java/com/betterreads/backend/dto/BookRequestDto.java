@@ -3,11 +3,12 @@ package com.betterreads.backend.dto;
 import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class BookRequestDto {
     @NotBlank
     private String title;
-    @NotBlank
+    @NotNull
     private Set<Long> authorIds;
     @NotBlank
     private String isbn;
