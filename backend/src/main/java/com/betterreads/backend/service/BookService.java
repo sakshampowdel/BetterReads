@@ -58,6 +58,11 @@ public class BookService {
         Set<Author> author = new HashSet<>(authorRepository.findAllById(bookRequestDto.getAuthorIds()));
         String isbn = bookRequestDto.getIsbn();
 
+        Optional<Book> duplicateBook = bookRepository.findByIsbn(isbn);
+        if (duplicateBook.isPresent()) {
+            return mapToResponseDto(duplicateBook.get());
+        }
+
         Book book = new Book(title, author, isbn);
 
         bookRepository.save(book);
