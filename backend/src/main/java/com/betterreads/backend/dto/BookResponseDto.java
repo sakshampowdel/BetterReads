@@ -2,15 +2,13 @@ package com.betterreads.backend.dto;
 
 import java.util.Set;
 
-import com.betterreads.backend.model.Author;
-
 public class BookResponseDto {
     private Long id;
     private String title;
-    private Set<Author> authors;
+    private Set<AuthorResponseDto> authors;
     private String isbn;
 
-    public BookResponseDto(Long id, String title, Set<Author> authors, String isbn) {
+    public BookResponseDto(Long id, String title, Set<AuthorResponseDto> authors, String isbn) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -25,7 +23,7 @@ public class BookResponseDto {
         return title;
     }
 
-    public Set<Author> getAuthor() {
+    public Set<AuthorResponseDto> getAuthor() {
         return authors;
     }
 
