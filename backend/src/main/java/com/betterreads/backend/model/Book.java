@@ -1,9 +1,12 @@
 package com.betterreads.backend.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Book {
@@ -11,14 +14,15 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String author;
+    @ManyToMany
+    private Set<Author> authors;
     private String isbn;
 
     protected Book() {}
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, Set<Author> authors, String isbn) {
         this.title = title;
-        this.author = author;
+        this.authors = authors;
         this.isbn = isbn;
     }
 
@@ -30,8 +34,8 @@ public class Book {
         return title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Set<Author> getAuthor() {
+        return authors;
     }
 
     public String getIsbn() {
@@ -42,8 +46,8 @@ public class Book {
         this.title = title;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(Set<Author> authors) {
+        this.authors = authors;
     }
 
     public void setIsbn(String isbn) {
