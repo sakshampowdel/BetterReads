@@ -2,21 +2,19 @@ package com.betterreads.backend.dto;
 
 import java.util.Set;
 
-import com.betterreads.backend.model.Author;
-
 import jakarta.validation.constraints.NotBlank;
 
 public class BookRequestDto {
     @NotBlank
     private String title;
     @NotBlank
-    private Set<Author> authors;
+    private Set<Long> authorIds;
     @NotBlank
     private String isbn;
 
-    public BookRequestDto(String title, Set<Author> authors, String isbn) {
+    public BookRequestDto(String title, Set<Long> authorIds, String isbn) {
         this.title = title;
-        this.authors = authors;
+        this.authorIds = authorIds;
         this.isbn = isbn;
     }
 
@@ -24,8 +22,8 @@ public class BookRequestDto {
         return title;
     }
 
-    public Set<Author> getAuthor() {
-        return authors;
+    public Set<Long> getAuthorIds() {
+        return authorIds;
     }
 
     public String getIsbn() {
