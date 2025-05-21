@@ -1,9 +1,10 @@
 import "./App.css";
+import Navbar from "./components/Navbar.tsx";
 
 function App() {
   return (
     <>
-      <div className="text-red-500 text-2xl font-bold">Hello Tailwind</div>
+      <Navbar />
     </>
   );
 }
