@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
 import Footer from "./components/Footer.tsx";
 import Navbar from "./components/Navbar.tsx";
 import LandingPage from "./pages/landing/LandingPage.tsx";
