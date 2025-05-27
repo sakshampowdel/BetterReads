@@ -1,6 +1,6 @@
-import CallToAction from "./CallToAction";
-import FeaturedBooks from "./FeaturedBooks";
-import HeroSection from "./HeroSection";
+import CallToAction from "./LandingCallToAction";
+import FeaturedBooks from "./LandingFeaturedBooks";
+import HeroSection from "./LandingHeroSection";
 
 function LandingPage() {
   return (
