@@ -81,7 +81,7 @@ public class BookService {
         String isbn = bookRequestDto.getIsbn();
 
         book.get().setTitle(title);
-        book.get().setAuthor(author);
+        book.get().setAuthors(author);
         book.get().setIsbn(isbn);
 
         bookRepository.save(book.get());
@@ -99,7 +99,7 @@ public class BookService {
     }
 
     public BookResponseDto mapToResponseDto(Book book) {
-        Set<Author> authors = book.getAuthor();
+        Set<Author> authors = book.getAuthors();
         Set<AuthorResponseDto> authorResponseDtos = new HashSet<>();
         for (Author author: authors) {
             authorResponseDtos.add(new AuthorResponseDto(author.getId(), author.getName()));

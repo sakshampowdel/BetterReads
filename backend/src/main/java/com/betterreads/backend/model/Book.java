@@ -34,7 +34,7 @@ public class Book {
         return title;
     }
 
-    public Set<Author> getAuthor() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
@@ -46,7 +46,7 @@ public class Book {
         this.title = title;
     }
 
-    public void setAuthor(Set<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 

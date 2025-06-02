@@ -23,7 +23,7 @@ public class BookResponseDto {
         return title;
     }
 
-    public Set<AuthorResponseDto> getAuthor() {
+    public Set<AuthorResponseDto> getAuthors() {
         return authors;
     }
 
