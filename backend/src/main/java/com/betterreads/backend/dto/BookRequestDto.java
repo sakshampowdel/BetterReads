@@ -10,7 +10,6 @@ public class BookRequestDto {
     private String title;
     @NotNull
     private Set<String> openLibraryAuthorIds;
-    @NotBlank
     private String isbn;
 
     public BookRequestDto(String title, Set<String> openLibraryAuthorIds, String isbn) {
