@@ -16,6 +16,7 @@ import com.betterreads.backend.dto.AuthorResponseDto;
 import com.betterreads.backend.dto.BookRequestDto;
 import com.betterreads.backend.dto.BookResponseDto;
 import com.betterreads.backend.dto.PaginatedResponseDto;
+import com.betterreads.backend.exception.AuthorNotFoundException;
 import com.betterreads.backend.exception.BookNotFoundException;
 import com.betterreads.backend.model.Author;
 import com.betterreads.backend.model.Book;
@@ -55,7 +56,19 @@ public class BookService {
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
         String title = bookRequestDto.getTitle();
-        Set<Author> author = new HashSet<>(authorRepository.findAllById(bookRequestDto.getAuthorIds()));
+        Set<Author> author = new HashSet<>();
+
+        for (String openLibaryId : bookRequestDto.getOpenLibraryAuthorIds()) {
+            Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibaryId);
+
+            if (maybeAuthor.isEmpty()) {
+                throw new AuthorNotFoundException("Author with Open Libary ID " + openLibaryId + " does not exist.");
+            }
+
+            author.add(maybeAuthor.get());
+            
+        }
+
         String isbn = bookRequestDto.getIsbn();
 
         Optional<Book> duplicateBook = bookRepository.findByIsbn(isbn);
@@ -77,7 +90,19 @@ public class BookService {
         }
 
         String title = bookRequestDto.getTitle();
-        Set<Author> author = new HashSet<>(authorRepository.findAllById(bookRequestDto.getAuthorIds()));
+        Set<Author> author = new HashSet<>();
+
+        for (String openLibaryId : bookRequestDto.getOpenLibraryAuthorIds()) {
+            Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibaryId);
+
+            if (maybeAuthor.isEmpty()) {
+                throw new AuthorNotFoundException("Author with Open Libary ID " + openLibaryId + " does not exist.");
+            }
+
+            author.add(maybeAuthor.get());
+            
+        }
+
         String isbn = bookRequestDto.getIsbn();
 
         book.get().setTitle(title);

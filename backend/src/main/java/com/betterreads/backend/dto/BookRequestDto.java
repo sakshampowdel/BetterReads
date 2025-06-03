@@ -9,13 +9,13 @@ public class BookRequestDto {
     @NotBlank
     private String title;
     @NotNull
-    private Set<Long> authorIds;
+    private Set<String> openLibraryAuthorIds;
     @NotBlank
     private String isbn;
 
-    public BookRequestDto(String title, Set<Long> authorIds, String isbn) {
+    public BookRequestDto(String title, Set<String> openLibraryAuthorIds, String isbn) {
         this.title = title;
-        this.authorIds = authorIds;
+        this.openLibraryAuthorIds = openLibraryAuthorIds;
         this.isbn = isbn;
     }
 
@@ -23,8 +23,8 @@ public class BookRequestDto {
         return title;
     }
 
-    public Set<Long> getAuthorIds() {
-        return authorIds;
+    public Set<String> getOpenLibraryAuthorIds() {
+        return openLibraryAuthorIds;
     }
 
     public String getIsbn() {
