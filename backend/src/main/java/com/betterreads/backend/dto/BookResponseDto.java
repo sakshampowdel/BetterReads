@@ -6,13 +6,13 @@ public class BookResponseDto {
     private Long id;
     private String title;
     private Set<AuthorResponseDto> authors;
-    private String isbn;
+    private String openLibraryBookId;
 
-    public BookResponseDto(Long id, String title, Set<AuthorResponseDto> authors, String isbn) {
+    public BookResponseDto(Long id, String title, Set<AuthorResponseDto> authors, String openLibraryBookId) {
         this.id = id;
         this.title = title;
         this.authors = authors;
-        this.isbn = isbn;
+        this.openLibraryBookId = openLibraryBookId;
     }
 
     public Long getId() {
@@ -27,7 +27,7 @@ public class BookResponseDto {
         return authors;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getOpenLibraryBookId() {
+        return openLibraryBookId;
     }
 }

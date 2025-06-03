@@ -10,12 +10,13 @@ public class BookRequestDto {
     private String title;
     @NotNull
     private Set<String> openLibraryAuthorIds;
-    private String isbn;
+    @NotBlank
+    private String openLibraryBookId;
 
-    public BookRequestDto(String title, Set<String> openLibraryAuthorIds, String isbn) {
+    public BookRequestDto(String title, Set<String> openLibraryAuthorIds, String openLibraryBookId) {
         this.title = title;
         this.openLibraryAuthorIds = openLibraryAuthorIds;
-        this.isbn = isbn;
+        this.openLibraryBookId = openLibraryBookId;
     }
 
     public String getTitle() {
@@ -26,7 +27,7 @@ public class BookRequestDto {
         return openLibraryAuthorIds;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getOpenLibraryBookId() {
+        return openLibraryBookId;
     }
 }

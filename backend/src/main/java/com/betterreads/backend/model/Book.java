@@ -16,14 +16,14 @@ public class Book {
     private String title;
     @ManyToMany
     private Set<Author> authors;
-    private String isbn;
+    private String openLibraryBookId;
 
     protected Book() {}
 
-    public Book(String title, Set<Author> authors, String isbn) {
+    public Book(String title, Set<Author> authors, String openLibraryBookId) {
         this.title = title;
         this.authors = authors;
-        this.isbn = isbn;
+        this.openLibraryBookId = openLibraryBookId;
     }
 
     public Long getId() {
@@ -38,8 +38,8 @@ public class Book {
         return authors;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getOpenLibraryBookId() {
+        return openLibraryBookId;
     }
 
     public void setTitle(String title) {
@@ -50,7 +50,7 @@ public class Book {
         this.authors = authors;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setOpenLibraryBookId(String isbn) {
+        this.openLibraryBookId = isbn;
     }
 }

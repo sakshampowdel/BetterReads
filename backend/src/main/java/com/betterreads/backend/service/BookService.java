@@ -69,14 +69,14 @@ public class BookService {
             
         }
 
-        String isbn = bookRequestDto.getIsbn();
+        String openLibaryBookId = bookRequestDto.getOpenLibraryBookId();
 
-        Optional<Book> duplicateBook = bookRepository.findByIsbn(isbn);
+        Optional<Book> duplicateBook = bookRepository.findByOpenLibraryBookId(openLibaryBookId);
         if (duplicateBook.isPresent()) {
             return mapToResponseDto(duplicateBook.get());
         }
 
-        Book book = new Book(title, author, isbn);
+        Book book = new Book(title, author, openLibaryBookId);
 
         bookRepository.save(book);
 
@@ -103,11 +103,11 @@ public class BookService {
             
         }
 
-        String isbn = bookRequestDto.getIsbn();
+        String openLibaryBookId = bookRequestDto.getOpenLibraryBookId();
 
         book.get().setTitle(title);
         book.get().setAuthors(author);
-        book.get().setIsbn(isbn);
+        book.get().setOpenLibraryBookId(openLibaryBookId);
 
         bookRepository.save(book.get());
 
@@ -130,6 +130,6 @@ public class BookService {
             authorResponseDtos.add(new AuthorResponseDto(author.getId(), author.getName()));
         }
 
-        return new BookResponseDto(book.getId(), book.getTitle(), authorResponseDtos, book.getIsbn());
+        return new BookResponseDto(book.getId(), book.getTitle(), authorResponseDtos, book.getOpenLibraryBookId());
     }
 }
