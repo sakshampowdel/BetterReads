@@ -7,7 +7,7 @@ function BookLibrary({ query }: { query: string }) {
   const [books, setBooks] = useState<Paginated<Book> | null>(null);
 
   useEffect(() => {
-    fetch("api/books?page=0&size=10")
+    fetch("/api/books?page=0&size=100")
       .then((res) => res.json())
       .then((data) => {
         setBooks(data);
