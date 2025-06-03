@@ -6,14 +6,16 @@ import BrowsePage from "./pages/browse/BrowsePage.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/browse" element={<BrowsePage />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <div className="scroll-smooth">
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/browse" element={<BrowsePage />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
 
