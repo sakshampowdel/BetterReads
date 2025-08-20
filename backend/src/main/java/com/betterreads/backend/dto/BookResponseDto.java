@@ -9,12 +9,16 @@ public class BookResponseDto {
   private String openLibraryId;
   private String description;
 
+  protected BookResponseDto() {
+  }
+
   public BookResponseDto(Long id, String title, Set<AuthorResponseDto> authors, String openLibraryId,
       String description) {
     this.id = id;
     this.title = title;
     this.authors = authors;
     this.openLibraryId = openLibraryId;
+    this.description = description;
   }
 
   public Long getId() {

@@ -50,6 +50,7 @@ public class AuthorService {
   public AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto) {
     String name = authorRequestDto.getName();
     String openLibraryId = authorRequestDto.getOpenLibraryId();
+    String bio = authorRequestDto.getBio();
 
     Optional<Author> duplicateAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
 
@@ -57,25 +58,31 @@ public class AuthorService {
       return mapToResponseDto(duplicateAuthor.get());
     }
 
-    Author author = new Author(name, openLibraryId);
+    Author author = new Author(name, openLibraryId, bio);
     authorRepository.save(author);
 
     return mapToResponseDto(author);
   }
 
   public AuthorResponseDto updateAuthorById(Long id, AuthorRequestDto authorRequestDto) {
-    Optional<Author> author = authorRepository.findById(id);
-    if (author.isEmpty()) {
+    Optional<Author> maybeAuthor = authorRepository.findById(id);
+    if (maybeAuthor.isEmpty()) {
       throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
     }
 
     String name = authorRequestDto.getName();
     String openLibraryId = authorRequestDto.getOpenLibraryId();
+    String bio = authorRequestDto.getBio();
 
-    author.get().setName(name);
-    author.get().setOpenLibraryId(openLibraryId);
+    Author author = maybeAuthor.get();
 
-    return mapToResponseDto(author.get());
+    author.setName(name);
+    author.setOpenLibraryId(openLibraryId);
+    author.setBio(bio);
+
+    authorRepository.save(author);
+
+    return mapToResponseDto(author);
   }
 
   public void deleteAuthorById(Long id) {
@@ -88,6 +95,6 @@ public class AuthorService {
   }
 
   public AuthorResponseDto mapToResponseDto(Author author) {
-    return new AuthorResponseDto(author.getId(), author.getName());
+    return new AuthorResponseDto(author.getId(), author.getName(), author.getOpenLibraryId(), author.getBio());
   }
 }

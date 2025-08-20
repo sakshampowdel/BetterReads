@@ -1,5 +1,6 @@
 package com.betterreads.backend.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 
 public class AuthorRequestDto {
@@ -7,10 +8,16 @@ public class AuthorRequestDto {
   private String name;
   @NotBlank
   private String openLibraryId;
+  @Nullable
+  private String bio;
 
-  public AuthorRequestDto(String name, String openLibraryId) {
+  protected AuthorRequestDto() {
+  }
+
+  public AuthorRequestDto(String name, String openLibraryId, String bio) {
     this.name = name;
     this.openLibraryId = openLibraryId;
+    this.bio = bio;
   }
 
   public String getName() {
@@ -19,5 +26,9 @@ public class AuthorRequestDto {
 
   public String getOpenLibraryId() {
     return openLibraryId;
+  }
+
+  public String getBio() {
+    return bio;
   }
 }

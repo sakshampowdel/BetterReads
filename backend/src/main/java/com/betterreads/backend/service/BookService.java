@@ -59,25 +59,27 @@ public class BookService {
     String title = bookRequestDto.getTitle();
     Set<Author> author = new HashSet<>();
 
-    for (String openLibaryId : bookRequestDto.getOpenLibraryAuthorIds()) {
-      Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibaryId);
+    for (String openLibraryId : bookRequestDto.getOpenLibraryAuthorIds()) {
+      Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
 
       if (maybeAuthor.isEmpty()) {
-        throw new AuthorNotFoundException("Author with Open Libary ID " + openLibaryId + " does not exist.");
+        throw new AuthorNotFoundException("Author with Open Library ID " + openLibraryId + " does not exist.");
       }
 
       author.add(maybeAuthor.get());
 
     }
 
-    String openLibaryId = bookRequestDto.getOpenLibraryBookId();
+    String openLibraryId = bookRequestDto.getOpenLibraryBookId();
 
-    Optional<Book> duplicateBook = bookRepository.findByOpenLibraryId(openLibaryId);
+    String description = bookRequestDto.getDescription();
+
+    Optional<Book> duplicateBook = bookRepository.findByOpenLibraryId(openLibraryId);
     if (duplicateBook.isPresent()) {
       return mapToResponseDto(duplicateBook.get());
     }
 
-    Book book = new Book(title, author, openLibaryId);
+    Book book = new Book(title, author, openLibraryId, description);
 
     bookRepository.save(book);
 
@@ -85,39 +87,43 @@ public class BookService {
   }
 
   public BookResponseDto updateBookById(Long id, BookRequestDto bookRequestDto) {
-    Optional<Book> book = bookRepository.findById(id);
-    if (book.isEmpty()) {
+    Optional<Book> maybeBook = bookRepository.findById(id);
+    if (maybeBook.isEmpty()) {
       throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
     }
+
+    Book book = maybeBook.get();
 
     String title = bookRequestDto.getTitle();
     Set<Author> author = new HashSet<>();
 
-    for (String openLibaryId : bookRequestDto.getOpenLibraryAuthorIds()) {
-      Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibaryId);
+    for (String openLibraryId : bookRequestDto.getOpenLibraryAuthorIds()) {
+      Optional<Author> maybeAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
 
       if (maybeAuthor.isEmpty()) {
-        throw new AuthorNotFoundException("Author with Open Libary ID " + openLibaryId + " does not exist.");
+        throw new AuthorNotFoundException("Author with Open Library ID " + openLibraryId + " does not exist.");
       }
 
       author.add(maybeAuthor.get());
 
     }
 
-    String openLibaryId = bookRequestDto.getOpenLibraryBookId();
+    String openLibraryId = bookRequestDto.getOpenLibraryBookId();
+    String description = bookRequestDto.getDescription();
 
-    book.get().setTitle(title);
-    book.get().setAuthors(author);
-    book.get().setOpenLibraryId(openLibaryId);
+    book.setTitle(title);
+    book.setAuthors(author);
+    book.setOpenLibraryId(openLibraryId);
+    book.setDescription(description);
 
-    bookRepository.save(book.get());
+    bookRepository.save(book);
 
-    return mapToResponseDto(book.get());
+    return mapToResponseDto(book);
   }
 
   public void deleteBookById(Long id) {
-    Optional<Book> book = bookRepository.findById(id);
-    if (book.isEmpty()) {
+    Optional<Book> maybeBook = bookRepository.findById(id);
+    if (maybeBook.isEmpty()) {
       throw new BookNotFoundException("Book with id " + id + " doesn't exist!");
     }
 
@@ -128,9 +134,11 @@ public class BookService {
     Set<Author> authors = book.getAuthors();
     Set<AuthorResponseDto> authorResponseDtos = new HashSet<>();
     for (Author author : authors) {
-      authorResponseDtos.add(new AuthorResponseDto(author.getId(), author.getName()));
+      authorResponseDtos
+          .add(new AuthorResponseDto(author.getId(), author.getName(), author.getOpenLibraryId(), author.getBio()));
     }
 
-    return new BookResponseDto(book.getId(), book.getTitle(), authorResponseDtos, book.getOpenLibraryId());
+    return new BookResponseDto(book.getId(), book.getTitle(), authorResponseDtos, book.getOpenLibraryId(),
+        book.getDescription());
   }
 }
