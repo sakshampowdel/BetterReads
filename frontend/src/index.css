@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+@theme {
+  /* Active tokens (utilities like bg-background, text-foreground) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-highlight: var(--highlight);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ====== Theme 1: Light happy hues ====== */
+:root[data-theme="light"] {
+  --background: #fffffe; /* Main background */
+  --foreground: #272343; /* Headline / primary text */
+  --muted: #2d334a; /* Paragraph / secondary text */
+
+  --accent: #ffd803; /* Buttons, highlights */
+  --accent-foreground: #272343; /* Text on buttons */
+
+  --secondary: #e3f6f5; /* Secondary surfaces */
+  --tertiary: #bae8e8; /* Tertiary surfaces */
+  --highlight: #ffd803; /* For emphasis (same as accent) */
+}
+
+/* ====== Theme 2: Dark happy hues ====== */
+:root[data-theme="dark"] {
+  --background: #004643; /* Dark background */
+  --foreground: #fffffe; /* Headline / primary text */
+  --muted: #abd1c6; /* Paragraph / secondary text */
+
+  --accent: #f9bc60; /* Buttons, highlights */
+  --accent-foreground: #001e1d; /* Text on buttons */
+
+  --secondary: #abd1c6; /* Secondary surfaces */
+  --tertiary: #e16162; /* Tertiary surfaces */
+  --highlight: #f9bc60; /* Highlight (same as accent) */
+}
