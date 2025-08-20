@@ -21,42 +21,42 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/authors")
 public class AuthorController {
-    private final AuthorService authorService;
+  private final AuthorService authorService;
 
-    public AuthorController(final AuthorService authorService) {
-        this.authorService = authorService;
-    }
+  public AuthorController(final AuthorService authorService) {
+    this.authorService = authorService;
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AuthorResponseDto> getAuthor(@PathVariable Long id) {
-        AuthorResponseDto authorResponseDto = authorService.getAuthorById(id);
-        return ResponseEntity.ok(authorResponseDto);
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<AuthorResponseDto> getAuthor(@PathVariable Long id) {
+    AuthorResponseDto authorResponseDto = authorService.getAuthorById(id);
+    return ResponseEntity.ok(authorResponseDto);
+  }
 
-    @GetMapping()
-    public ResponseEntity<PaginatedResponseDto<AuthorResponseDto>> getAuthors(Pageable pageable) {
-        PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = authorService.getAllAuthors(pageable);
-        return ResponseEntity.ok(paginatedResponseDto);
-    }
+  @GetMapping()
+  public ResponseEntity<PaginatedResponseDto<AuthorResponseDto>> getAuthors(Pageable pageable) {
+    PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = authorService.getAllAuthors(pageable);
+    return ResponseEntity.ok(paginatedResponseDto);
+  }
 
-    @PostMapping()
-    public ResponseEntity<AuthorResponseDto> createAuthor(
-        @Valid @RequestBody AuthorRequestDto authorRequestDto) {
-        AuthorResponseDto authorResponseDto = authorService.createAuthor(authorRequestDto);
-        return ResponseEntity.status(201).body(authorResponseDto);
-    }
+  @PostMapping()
+  public ResponseEntity<AuthorResponseDto> createAuthor(
+      @Valid @RequestBody AuthorRequestDto authorRequestDto) {
+    AuthorResponseDto authorResponseDto = authorService.createAuthor(authorRequestDto);
+    return ResponseEntity.status(201).body(authorResponseDto);
+  }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AuthorResponseDto> updateAuthor(
-        @PathVariable Long id,
-        @Valid @RequestBody AuthorRequestDto authorRequestDto) {
-        AuthorResponseDto authorResponseDto = authorService.updateAuthorById(id, authorRequestDto);
-        return ResponseEntity.ok(authorResponseDto);
-    }
+  @PutMapping("/{id}")
+  public ResponseEntity<AuthorResponseDto> updateAuthor(
+      @PathVariable Long id,
+      @Valid @RequestBody AuthorRequestDto authorRequestDto) {
+    AuthorResponseDto authorResponseDto = authorService.updateAuthorById(id, authorRequestDto);
+    return ResponseEntity.ok(authorResponseDto);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
-        authorService.deleteAuthorById(id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
+    authorService.deleteAuthorById(id);
+    return ResponseEntity.noContent().build();
+  }
 }

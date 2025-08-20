@@ -10,47 +10,58 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
-    @ManyToMany
-    private Set<Author> authors;
-    private String openLibraryBookId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  private String title;
+  @ManyToMany
+  private Set<Author> authors;
+  private String openLibraryId;
+  private String description;
 
-    protected Book() {}
+  protected Book() {
+  }
 
-    public Book(String title, Set<Author> authors, String openLibraryBookId) {
-        this.title = title;
-        this.authors = authors;
-        this.openLibraryBookId = openLibraryBookId;
-    }
+  public Book(String title, Set<Author> authors, String openLibraryId, String description) {
+    this.title = title;
+    this.authors = authors;
+    this.openLibraryId = openLibraryId;
+    this.description = description;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Set<Author> getAuthors() {
-        return authors;
-    }
+  public Set<Author> getAuthors() {
+    return authors;
+  }
 
-    public String getOpenLibraryBookId() {
-        return openLibraryBookId;
-    }
+  public String getOpenLibraryId() {
+    return openLibraryId;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setOpenLibraryBookId(String isbn) {
-        this.openLibraryBookId = isbn;
-    }
+  public void setAuthors(Set<Author> authors) {
+    this.authors = authors;
+  }
+
+  public void setOpenLibraryId(String openLibraryId) {
+    this.openLibraryId = openLibraryId;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

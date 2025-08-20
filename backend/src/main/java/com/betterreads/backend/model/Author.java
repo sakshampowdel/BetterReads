@@ -6,36 +6,37 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Author {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private String openLibraryId;
+  @Id
+  @GeneratedValue
+  private Long id;
+  private String name;
+  private String openLibraryId;
 
-    protected Author() {}
+  protected Author() {
+  }
 
-    public Author(String name, String openLibraryId) {
-        this.name = name;
-        this.openLibraryId = openLibraryId;
-    }
+  public Author(String name, String openLibraryId) {
+    this.name = name;
+    this.openLibraryId = openLibraryId;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getOpenLibraryId() {
-        return openLibraryId;
-    }
+  public String getOpenLibraryId() {
+    return openLibraryId;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setOpenLibraryId(String openLibraryId) {
-        this.openLibraryId = openLibraryId;
-    }
+  public void setOpenLibraryId(String openLibraryId) {
+    this.openLibraryId = openLibraryId;
+  }
 }

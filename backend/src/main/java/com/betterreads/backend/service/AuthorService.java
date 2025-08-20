@@ -17,76 +17,77 @@ import com.betterreads.backend.repository.AuthorRepository;
 
 @Service
 public class AuthorService {
-    private final AuthorRepository authorRepository;
+  private final AuthorRepository authorRepository;
 
-    public AuthorService(final AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
+  public AuthorService(final AuthorRepository authorRepository) {
+    this.authorRepository = authorRepository;
+  }
+
+  public AuthorResponseDto getAuthorById(Long id) {
+    Optional<Author> author = authorRepository.findById(id);
+    if (author.isEmpty()) {
+      throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
     }
 
-    public AuthorResponseDto getAuthorById(Long id) {
-        Optional<Author> author = authorRepository.findById(id);
-        if (author.isEmpty()) {
-            throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
-        }
+    return mapToResponseDto(author.get());
+  }
 
-        return mapToResponseDto(author.get());
+  public PaginatedResponseDto<AuthorResponseDto> getAllAuthors(Pageable pageable) {
+    Page<Author> page = authorRepository.findAll(pageable);
+    List<Author> authors = page.getContent();
+    List<AuthorResponseDto> authorResponseDtos = new ArrayList<>();
+
+    for (Author author : authors) {
+      authorResponseDtos.add(mapToResponseDto(author));
     }
 
-    public PaginatedResponseDto<AuthorResponseDto> getAllAuthors(Pageable pageable) {
-        Page<Author> page = authorRepository.findAll(pageable);
-        List<Author> authors = page.getContent();
-        List<AuthorResponseDto> authorResponseDtos = new ArrayList<>();
+    PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = new PaginatedResponseDto<>(authorResponseDtos,
+        page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
 
-        for (Author author: authors) {
-            authorResponseDtos.add(mapToResponseDto(author));
-        }
+    return paginatedResponseDto;
+  }
 
-        PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = new PaginatedResponseDto<>(authorResponseDtos, page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements());
+  public AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto) {
+    String name = authorRequestDto.getName();
+    String openLibraryId = authorRequestDto.getOpenLibraryId();
 
-        return paginatedResponseDto;
+    Optional<Author> duplicateAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
+
+    if (duplicateAuthor.isPresent()) {
+      return mapToResponseDto(duplicateAuthor.get());
     }
 
-    public AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto) {
-        String name = authorRequestDto.getName();
-        String openLibraryId = authorRequestDto.getOpenLibraryId();
+    Author author = new Author(name, openLibraryId);
+    authorRepository.save(author);
 
-        Optional<Author> duplicateAuthor = authorRepository.findByOpenLibraryId(openLibraryId);
+    return mapToResponseDto(author);
+  }
 
-        if (duplicateAuthor.isPresent()) {
-            return mapToResponseDto(duplicateAuthor.get());
-        }
-
-        Author author = new Author(name, openLibraryId);
-        authorRepository.save(author);
-
-        return mapToResponseDto(author);
+  public AuthorResponseDto updateAuthorById(Long id, AuthorRequestDto authorRequestDto) {
+    Optional<Author> author = authorRepository.findById(id);
+    if (author.isEmpty()) {
+      throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
     }
 
-    public AuthorResponseDto updateAuthorById(Long id, AuthorRequestDto authorRequestDto) {
-        Optional<Author> author = authorRepository.findById(id);
-        if (author.isEmpty()) {
-            throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
-        }
+    String name = authorRequestDto.getName();
+    String openLibraryId = authorRequestDto.getOpenLibraryId();
 
-        String name = authorRequestDto.getName();
-        String openLibraryId = authorRequestDto.getOpenLibraryId();
+    author.get().setName(name);
+    author.get().setOpenLibraryId(openLibraryId);
 
-        author.get().setName(name);
-        author.get().setOpenLibraryId(openLibraryId);
+    return mapToResponseDto(author.get());
+  }
 
-        return mapToResponseDto(author.get());
+  public void deleteAuthorById(Long id) {
+    Optional<Author> author = authorRepository.findById(id);
+    if (author.isEmpty()) {
+      throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
     }
 
-    public void deleteAuthorById(Long id) {
-        Optional<Author> author = authorRepository.findById(id);
-        if (author.isEmpty()) {
-            throw new AuthorNotFoundException("Author with id " + id + " doesn't exist!");
-        }
+    authorRepository.deleteById(id);
+  }
 
-        authorRepository.deleteById(id);
-    }
-
-    public AuthorResponseDto mapToResponseDto(Author author) {
-        return new AuthorResponseDto(author.getId(), author.getName());
-    }
+  public AuthorResponseDto mapToResponseDto(Author author) {
+    return new AuthorResponseDto(author.getId(), author.getName());
+  }
 }
