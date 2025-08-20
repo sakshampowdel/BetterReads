@@ -1,0 +1,29 @@
+# Build output
+target/
+
+# Maven/Gradle caches and wrappers
+.mvn/
+.mvn/wrapper/maven-wrapper.jar
+.gradle/
+build/
+
+# IDE/project files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Git
+.git
+.gitignore
