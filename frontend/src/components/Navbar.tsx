@@ -49,7 +49,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li className="hover:cursor-pointer bg-accent text-accent-foreground p-2 px-4 w-fit rounded-xl">
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">Login</Link>
           </li>
           <li>
             <ThemeToggle theme={theme} setTheme={setTheme}></ThemeToggle>
@@ -107,8 +107,8 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="hover:cursor-pointer bg-accent text-accent-foreground p-2 px-4 w-fit rounded-xl">
-                <Link to="/signup" onClick={() => setMenu(false)}>
-                  Sign Up
+                <Link to="/login" onClick={() => setMenu(false)}>
+                  Login
                 </Link>
               </li>
               <li>
