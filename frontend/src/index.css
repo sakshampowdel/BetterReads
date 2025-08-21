@@ -14,10 +14,6 @@
   --color-highlight: var(--highlight);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 /* ====== Theme 1: Light happy hues ====== */
 :root[data-theme="light"] {
   --background: #fffffe; /* Main background */
