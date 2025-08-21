@@ -1,4 +1,5 @@
 import { LibraryBig } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -10,13 +11,16 @@ const Hero = () => {
         <LibraryBig className="h-full max-h-70 min-w-full" />
       </div>
 
-      <div className="flex flex-col gap-10 flex-wrap text-center">
+      <div className="flex flex-col gap-10 flex-wrap items-center text-center">
         <h1 className="text-foreground font-bold text-8xl max-lg:text-6xl">
           Read Better.
         </h1>
         <p className="text-muted text-2xl">
           Connect with other book lovers without the dated feel!
         </p>
+        <button className="hover:cursor-pointer bg-accent text-xl text-accent-foreground p-2 px-4 w-fit rounded-xl">
+          <Link to="/login">Join Us!</Link>
+        </button>
       </div>
     </section>
   );
