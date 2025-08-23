@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="p-24 px-48 grid grid-cols-2 max-lg:grid-cols-1 items-center gap-20"
+      className="p-24 px-48 grid grid-cols-2 max-lg:grid-cols-1 items-center gap-20 max-md:px-2"
     >
       <div className="flex justify-center">
         <LibraryBig className="h-full max-h-70 min-w-full" />
