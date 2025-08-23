@@ -18,19 +18,22 @@ It’s a full-stack web application built with **Spring Boot** (backend) and **R
 
 ## 🛠 Tech Stack
 
-**Frontend**  
-- ⚛️ React (Vite / CRA)  
-- TailwindCSS or ShadCN for styling  
-- React Router for navigation  
+**Frontend**
 
-**Backend**  
-- ☕ Spring Boot (Java)  
-- RESTful API with JWT authentication  
-- PostgreSQL (primary database)  
+- ⚛️ React (Vite / CRA)
+- TailwindCSS for styling
+- React Router for navigation
 
-**DevOps / Infra** (future plans)  
-- Docker & Kubernetes for containerization and scaling  
-- AWS / GCP / Azure for deployment  
+**Backend**
+
+- ☕ Spring Boot (Java)
+- RESTful API with JWT authentication
+- PostgreSQL (primary database)
+
+**DevOps / Infra** (future plans)
+
+- Docker for containerization and scaling
+- AWS for deployment
 
 ---
 
@@ -38,23 +41,10 @@ It’s a full-stack web application built with **Spring Boot** (backend) and **R
 
 ## ⚡ Getting Started
 
-### Prerequisites
-- [Java 17+](https://adoptium.net/)  
-- [Node.js 18+](https://nodejs.org/)  
-- [PostgreSQL](https://www.postgresql.org/)  
+Just run
 
-### Backend Setup
 ```bash
-cd backend
-./mvnw spring-boot:run
+docker compose up --build
 ```
-Backend will run at: http://localhost:8080
 
-### Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Frontend will run at: http://localhost:5173
-
+to access the application!
