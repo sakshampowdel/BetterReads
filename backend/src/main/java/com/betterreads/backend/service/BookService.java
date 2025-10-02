@@ -141,4 +141,19 @@ public class BookService {
     return new BookResponseDto(book.getId(), book.getTitle(), authorResponseDtos, book.getOpenLibraryId(),
         book.getDescription());
   }
+
+  public PaginatedResponseDto<BookResponseDto> searchBooks(String query, Pageable pageable) {
+    Page<Book> page = bookRepository.findByTitleContainingIgnoreCase(query, pageable);
+
+    List<BookResponseDto> bookDtos = page.getContent().stream()
+        .map(this::mapToResponseDto)
+        .toList();
+
+    return new PaginatedResponseDto<>(
+        bookDtos,
+        page.getNumber(),
+        page.getSize(),
+        page.getTotalPages(),
+        page.getTotalElements());
+  }
 }

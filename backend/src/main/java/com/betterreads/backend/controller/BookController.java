@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -58,5 +59,12 @@ public class BookController {
   public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
     bookService.deleteBookById(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<PaginatedResponseDto<BookResponseDto>> searchBooks(
+      @RequestParam(defaultValue = "") String q,
+      Pageable pageable) {
+    return ResponseEntity.ok(bookService.searchBooks(q, pageable));
   }
 }
