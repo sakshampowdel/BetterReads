@@ -1,63 +1,37 @@
+import { useEffect, useState } from "react";
 import BookIcon from "../../components/BookIcon";
 import type { Book } from "../../types/Book";
-
-const testBook: Book = {
-  id: 1,
-  title: "Harry Potter and the Philosopher's Stone",
-  authors: [
-    {
-      id: 1,
-      name: "J. K. Rowling",
-      openlibraryid: "OL23919A",
-      bio: "British author, best known for the Harry Potter series.",
-    },
-  ],
-  openlibraryid: "OL7353617M",
-  description:
-    "The first book in the Harry Potter series, following Harry's journey at Hogwarts.",
-};
+import { fetchBooks } from "../../api";
 
 const TrendingBooks = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const PAGE_NUMBER = 0;
+  const PAGE_SIZE = 10;
+
+  useEffect(() => {
+    fetchBooks(PAGE_NUMBER, PAGE_SIZE)
+      .then((data) => {
+        setBooks(data.data);
+        console.log("Books resposne:", data.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section id="trending" className="p-24 px-48 max-md:p-2">
       <h1 className="text-4xl font-semibold max-md:text-2xl">Trending Books</h1>
-      <div className="py-8 grid grid-cols-2 sm:grid-cols-4  lg:grid-cols-10 gap-2">
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div>
-          <BookIcon book={testBook} />
-        </div>
-        <div className="block md:hidden lg:block">
-          <BookIcon book={testBook} />
-        </div>
-        <div className="block md:hidden lg:block">
-          <BookIcon book={testBook} />
-        </div>
-        <div className="block md:hidden lg:hidden">
-          <BookIcon book={testBook} />
-        </div>
-        <div className="block md:hidden lg:hidden">
-          <BookIcon book={testBook} />
-        </div>
+      <div className="">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="py-8 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-10 gap-2 overflow-hidden">
+            {books.map((book) => (
+              <BookIcon key={book.id} book={book} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
