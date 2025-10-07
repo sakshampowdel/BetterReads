@@ -4,6 +4,6 @@ export type Book = {
   id: number;
   title: string;
   authors: Author[];
-  openlibraryid: string;
+  openLibraryId: string;
   description: string;
 };

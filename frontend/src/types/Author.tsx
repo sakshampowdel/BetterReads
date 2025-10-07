@@ -1,6 +1,6 @@
 export type Author = {
   id: number;
   name: string;
-  openlibraryid: string;
+  openLibraryId: string;
   bio: string;
 };
