@@ -13,20 +13,19 @@ const Browse = () => {
     fetchBooks(page, PAGE_SIZE)
       .then((data) => {
         setBooks(data.data);
-        console.log("Books resposne:", data.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [page]);
 
   return (
-    <section id="trending" className="p-24 px-48 max-md:p-2">
-      <h1 className="text-4xl font-semibold max-md:text-2xl">Trending Books</h1>
-      <div className="py-8 grid grid-cols-2 sm:grid-cols-4  lg:grid-cols-10 gap-2">
+    <section id="browse" className="p-24 px-48 max-md:p-2">
+      <h1 className="text-4xl font-semibold max-md:text-2xl">Browse</h1>
+      <div className="">
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <div>
+          <div className="py-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
             {books.map((book) => (
               <BookIcon key={book.id} book={book} />
             ))}

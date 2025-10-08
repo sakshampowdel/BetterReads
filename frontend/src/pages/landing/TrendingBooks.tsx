@@ -7,7 +7,7 @@ const TrendingBooks = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const PAGE_NUMBER = 0;
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 8;
 
   useEffect(() => {
     fetchBooks(PAGE_NUMBER, PAGE_SIZE)
@@ -26,7 +26,7 @@ const TrendingBooks = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <div className="py-8 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-10 gap-2 overflow-hidden">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6 xl:gap-8 mt-6">
             {books.map((book) => (
               <BookIcon key={book.id} book={book} />
             ))}
