@@ -10,7 +10,7 @@ const TrendingBooks = () => {
   const PAGE_SIZE = 8;
 
   useEffect(() => {
-    fetchBooks(PAGE_NUMBER, PAGE_SIZE)
+    fetchBooks(PAGE_NUMBER, PAGE_SIZE, "")
       .then((data) => {
         setBooks(data.data);
         console.log("Books resposne:", data.data);
