@@ -40,8 +40,8 @@ public class BookService {
     return mapToResponseDto(book.get());
   }
 
-  public PaginatedResponseDto<BookResponseDto> getAllBooks(Pageable pageable) {
-    Page<Book> page = bookRepository.findAll(pageable);
+  public PaginatedResponseDto<BookResponseDto> getAllBooks(String title, Pageable pageable) {
+    Page<Book> page = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
     List<Book> books = page.getContent();
     List<BookResponseDto> bookResponseDtos = new ArrayList<>();
 
@@ -142,18 +142,4 @@ public class BookService {
         book.getDescription());
   }
 
-  public PaginatedResponseDto<BookResponseDto> searchBooks(String query, Pageable pageable) {
-    Page<Book> page = bookRepository.findByTitleContainingIgnoreCase(query, pageable);
-
-    List<BookResponseDto> bookDtos = page.getContent().stream()
-        .map(this::mapToResponseDto)
-        .toList();
-
-    return new PaginatedResponseDto<>(
-        bookDtos,
-        page.getNumber(),
-        page.getSize(),
-        page.getTotalPages(),
-        page.getTotalElements());
-  }
 }

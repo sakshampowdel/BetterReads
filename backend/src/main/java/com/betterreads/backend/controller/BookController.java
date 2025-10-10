@@ -35,8 +35,9 @@ public class BookController {
   }
 
   @GetMapping()
-  public ResponseEntity<PaginatedResponseDto<BookResponseDto>> getBooks(Pageable pageable) {
-    PaginatedResponseDto<BookResponseDto> paginatedResponseDto = bookService.getAllBooks(pageable);
+  public ResponseEntity<PaginatedResponseDto<BookResponseDto>> getBooks(
+      @RequestParam(required = false, defaultValue = "") String title, Pageable pageable) {
+    PaginatedResponseDto<BookResponseDto> paginatedResponseDto = bookService.getAllBooks(title, pageable);
     return ResponseEntity.ok(paginatedResponseDto);
   }
 
@@ -61,10 +62,4 @@ public class BookController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/search")
-  public ResponseEntity<PaginatedResponseDto<BookResponseDto>> searchBooks(
-      @RequestParam(defaultValue = "") String q,
-      Pageable pageable) {
-    return ResponseEntity.ok(bookService.searchBooks(q, pageable));
-  }
 }
