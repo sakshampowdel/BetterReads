@@ -1,37 +1,23 @@
-import { useEffect, useState } from "react";
-import type { Book } from "../../types/Book";
-import { fetchBooks } from "../../api";
-import BookIcon from "../../components/BookIcon";
+import { useState } from "react";
+import BrowseBooks from "./BrowseBooks";
 
 const Browse = () => {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const PAGE_SIZE = 10;
-
-  useEffect(() => {
-    fetchBooks(page, PAGE_SIZE)
-      .then((data) => {
-        setBooks(data.data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  }, [page]);
+  const [titleQuery, setTitleQuery] = useState("");
 
   return (
-    <section id="browse" className="p-24 px-48 max-md:p-2">
-      <h1 className="text-4xl font-semibold max-md:text-2xl">Browse</h1>
-      <div className="">
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <div className="py-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
-            {books.map((book) => (
-              <BookIcon key={book.id} book={book} />
-            ))}
-          </div>
-        )}
-      </div>
+    <section
+      id="browse"
+      className="min-h-screen pt-24 px-48 max-md:p-2 space-y-4"
+    >
+      <input
+        className="text-2xl py-1 min-w-full border-2 border-muted rounded-sm"
+        type="search"
+        id="browse-books"
+        placeholder="Search..."
+        value={titleQuery}
+        onChange={(e) => setTitleQuery(e.target.value)}
+      ></input>
+      <BrowseBooks title={titleQuery} />
     </section>
   );
 };
