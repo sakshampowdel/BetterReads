@@ -16,7 +16,7 @@ const BookIcon = ({ book }: { book: Book }) => {
           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         />
       ) : (
-        <div className="h-full w-full bg-gradient-to-br from-accent/30 via-accent/10 to-gray-800 flex items-end p-3 text-white">
+        <div className="h-full w-full bg-gradient-to-br from-accent/30 via-accent/10 to-gray-800 flex items-end p-3 text-foreground">
           <span className="text-sm font-medium truncate">{book.title}</span>
         </div>
       )}
