@@ -12,3 +12,10 @@ export async function fetchBooks(
   if (!res.ok) throw new Error("Failed to fetch books");
   return res.json();
 }
+
+export async function fetchBookById(id: number): Promise<Book> {
+  const res = await fetch(`/api/books/${id}`);
+  if (res.status === 404) throw new Error("Book not found");
+  if (!res.ok) throw new Error("Failed to fetch book");
+  return res.json();
+}
