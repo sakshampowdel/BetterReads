@@ -3,10 +3,10 @@ import TrendingBooks from "./TrendingBooks";
 
 const Landing = () => {
   return (
-    <div>
+    <main>
       <Hero />
       <TrendingBooks />
-    </div>
+    </main>
   );
 };
 
