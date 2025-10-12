@@ -8,7 +8,7 @@ import BookDetails from "./pages/book/BookDetails";
 
 function App() {
   return (
-    <div className="bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <BrowserRouter>
         <Navbar />
         <Routes>
