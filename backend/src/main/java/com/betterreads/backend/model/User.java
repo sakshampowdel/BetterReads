@@ -15,15 +15,15 @@ public class User {
 
   private String username;
   private String email;
-  private String passwordHash;
+  private String password;
 
   protected User() {
   }
 
-  public User(String username, String email, String passwordHash) {
+  public User(String username, String email, String password) {
     this.username = username;
     this.email = email;
-    this.passwordHash = passwordHash;
+    this.password = password;
   }
 
   public Long getId() {
@@ -38,8 +38,8 @@ public class User {
     return email;
   }
 
-  public String getPasswordHash() {
-    return passwordHash;
+  public String getPassword() {
+    return password;
   }
 
   public void setUsername(String username) {
@@ -50,7 +50,7 @@ public class User {
     this.email = email;
   }
 
-  public void setPasswordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
+  public void setPasswordHash(String password) {
+    this.password = password;
   }
 }
