@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.betterreads.backend.dto.UserRequestDto;
 import com.betterreads.backend.dto.UserResponseDto;
+import com.betterreads.backend.exception.InvalidCredentialsException;
+import com.betterreads.backend.exception.UserAlreadyExistsException;
+import com.betterreads.backend.exception.UserNotFoundException;
 import com.betterreads.backend.model.User;
 import com.betterreads.backend.repository.UserRepository;
 
@@ -22,7 +25,7 @@ public class UserService {
     String email = userRequestDto.getEmail();
 
     if (userRepository.findByEmail(email).isPresent()) {
-      throw new RuntimeException("Email already in use");
+      throw new UserAlreadyExistsException("Email already in use!");
     }
 
     String username = userRequestDto.getUsername();
@@ -40,12 +43,12 @@ public class UserService {
     String email = userRequestDto.getEmail();
 
     User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new RuntimeException("Invalid Credentials"));
+        .orElseThrow(() -> new UserNotFoundException("Invalid Credentials!"));
 
     String password = userRequestDto.getPassword();
 
     if (!passwordEncoder.matches(password, user.getPassword())) {
-      throw new RuntimeException("Invalid Credentials");
+      throw new InvalidCredentialsException("Invalid Credentials!");
     }
 
     return mapToResponseDto(user);
