@@ -28,7 +28,7 @@ public class UserService {
       throw new UserAlreadyExistsException("Email already in use!");
     }
 
-    String username = userRequestDto.getUsername();
+    String username = userRequestDto.getDisplayName();
     String password = userRequestDto.getPassword();
 
     String hashedPassword = passwordEncoder.encode(password);
@@ -54,7 +54,14 @@ public class UserService {
     return mapToResponseDto(user);
   }
 
+  public UserResponseDto getUserProfile(String displayName) {
+    User user = userRepository.findByDisplayName(displayName)
+        .orElseThrow(() -> new UserNotFoundException("User: " + displayName + " not found!"));
+
+    return mapToResponseDto(user);
+  }
+
   public UserResponseDto mapToResponseDto(User user) {
-    return new UserResponseDto(user.getId(), user.getUsername(), user.getEmail());
+    return new UserResponseDto(user.getId(), user.getDisplayName(), user.getEmail());
   }
 }
