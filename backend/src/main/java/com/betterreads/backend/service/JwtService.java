@@ -9,8 +9,6 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.betterreads.backend.model.User;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -24,10 +22,10 @@ public class JwtService {
     this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
   }
 
-  public String generateToken(User user) {
+  public String generateToken(String email, String displayName) {
     Map<String, Object> claims = new HashMap<>();
-    claims.put("username", user.getUsername());
-    return buildToken(claims, user.getEmail());
+    claims.put("username", displayName);
+    return buildToken(claims, email);
   }
 
   private String buildToken(Map<String, Object> claims, String subject) {
@@ -58,8 +56,8 @@ public class JwtService {
     return extractAllClaims(token).getExpiration().before(new Date());
   }
 
-  public boolean isTokenValid(String token, User user) {
-    String email = extractEmail(token);
-    return email.equals(user.getEmail()) && !isTokenExpired(token);
+  public boolean isTokenValid(String token, String email) {
+    String extractedEmail = extractEmail(token);
+    return extractedEmail.equals(email) && !isTokenExpired(token);
   }
 }
