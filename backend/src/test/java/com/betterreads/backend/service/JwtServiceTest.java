@@ -19,10 +19,10 @@ public class JwtServiceTest {
   @Test
   void testGenerateAndValidateToken() {
     User user = new User("testuser", "test@example.com", "password");
-    String token = jwtService.generateToken(user);
+    String token = jwtService.generateToken(user.getEmail(), user.getDisplayName());
 
     assertNotNull(token);
-    assertTrue(jwtService.isTokenValid(token, user));
+    assertTrue(jwtService.isTokenValid(token, user.getEmail()));
     assertEquals("test@example.com", jwtService.extractEmail(token));
   }
 }
