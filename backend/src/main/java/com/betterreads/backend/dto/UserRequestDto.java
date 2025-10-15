@@ -4,20 +4,20 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UserRequestDto {
   @NotBlank
-  private String username;
+  private String displayName;
   @NotBlank
   private String email;
   @NotBlank
   private String password;
 
-  public UserRequestDto(String username, String email, String password) {
-    this.username = username;
+  public UserRequestDto(String displayName, String email, String password) {
+    this.displayName = displayName;
     this.email = email;
     this.password = password;
   }
 
-  public String getUsername() {
-    return username;
+  public String getDisplayName() {
+    return displayName;
   }
 
   public String getEmail() {

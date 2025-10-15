@@ -2,12 +2,12 @@ package com.betterreads.backend.dto;
 
 public class UserResponseDto {
   private Long id;
-  private String username;
+  private String displayName;
   private String email;
 
-  public UserResponseDto(Long id, String username, String email) {
+  public UserResponseDto(Long id, String displayName, String email) {
     this.id = id;
-    this.username = username;
+    this.displayName = displayName;
     this.email = email;
   }
 
@@ -15,8 +15,8 @@ public class UserResponseDto {
     return id;
   }
 
-  public String getUsername() {
-    return username;
+  public String getDisplayName() {
+    return displayName;
   }
 
   public String getEmail() {
