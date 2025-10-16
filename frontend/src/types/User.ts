@@ -4,6 +4,11 @@ export type User = {
   email: string;
 };
 
+export type LoginUser = {
+  email: string;
+  password: string;
+};
+
 export type UserRequest = {
   displayName: string;
   email: string;
