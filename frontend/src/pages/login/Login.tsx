@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../../api";
 import type { LoginUser } from "../../types/User";
 import { useAuth } from "../../context/useAuth";
@@ -8,13 +8,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { authState, login } = useAuth();
   const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isEmailValid = emailRegex.test(email);
   const isPasswordValid = password.trim().length > 0;
   const isFormValid = isEmailValid && isPasswordValid;
+
+  useEffect(() => {
+    if (authState.user) {
+      navigate("/mybooks");
+    }
+  }, [authState.user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

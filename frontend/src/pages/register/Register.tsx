@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registerUser } from "../../api";
 import type { UserRequest } from "../../types/User";
 import { useAuth } from "../../context/useAuth";
@@ -9,8 +9,14 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { authState, login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authState.user) {
+      navigate("/mybooks");
+    }
+  }, [authState.user, navigate]);
 
   const isDisplayNameValid =
     displayName.length >= 3 && displayName.length <= 15;
