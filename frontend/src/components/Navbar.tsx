@@ -48,7 +48,7 @@ const Navbar = () => {
               My Books
             </NavLink>
           </li>
-          <li className="hover:cursor-pointer bg-accent text-accent-foreground p-2 px-4 w-fit rounded-xl">
+          <li className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity">
             <Link to="/login">Login</Link>
           </li>
           <li>
