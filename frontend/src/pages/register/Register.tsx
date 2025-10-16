@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { registerUser } from "../../api";
 import type { UserRequest } from "../../types/User";
+import { useAuth } from "../../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const isDisplayNameValid =
     displayName.length >= 3 && displayName.length <= 15;
@@ -26,7 +31,9 @@ const Register = () => {
       password: password,
     };
     try {
-      await registerUser(user);
+      const data = await registerUser(user);
+      login(data);
+      navigate("/mybooks", { replace: true });
     } catch (err) {
       console.error("Failed to register user" + err);
     }
