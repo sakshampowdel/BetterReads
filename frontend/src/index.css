@@ -16,28 +16,28 @@
 
 /* ====== Theme 1: Light happy hues ====== */
 :root[data-theme="light"] {
-  --background: #fffffe; /* Main background */
-  --foreground: #272343; /* Headline / primary text */
-  --muted: #2d334a; /* Paragraph / secondary text */
+  --background: #f4f5f0; /* Warm paper white */
+  --foreground: #2a2e2b; /* Deep green-black text */
+  --muted: #5b625b; /* Muted olive-gray for secondary text */
 
-  --accent: #ffd803; /* Buttons, highlights */
-  --accent-foreground: #272343; /* Text on buttons */
+  --accent: #8fbf8f; /* Soft sage green for buttons & highlights */
+  --accent-foreground: #1b201b; /* Text on accent elements */
 
-  --secondary: #e3f6f5; /* Secondary surfaces */
-  --tertiary: #bae8e8; /* Tertiary surfaces */
-  --highlight: #ffd803; /* For emphasis (same as accent) */
+  --secondary: #e3ebe3; /* Gentle green-tinted gray for cards/forms */
+  --tertiary: #d3ddd3; /* Slightly darker layer */
+  --highlight: #8fbf8f; /* Matches accent */
 }
 
 /* ====== Theme 2: Dark happy hues ====== */
 :root[data-theme="dark"] {
-  --background: #004643; /* Dark background */
-  --foreground: #fffffe; /* Headline / primary text */
-  --muted: #abd1c6; /* Paragraph / secondary text */
+  --background: #0d1f1c; /* Deep forest green */
+  --foreground: #f0f5f3; /* Soft warm white */
+  --muted: #9bb5aa; /* Muted sage for secondary text */
 
-  --accent: #f9bc60; /* Buttons, highlights */
-  --accent-foreground: #001e1d; /* Text on buttons */
+  --accent: #6fbf73; /* Mossy green accent (subtle glow) */
+  --accent-foreground: #0d1f1c; /* Button text on accent */
 
-  --secondary: #abd1c6; /* Secondary surfaces */
-  --tertiary: #e16162; /* Tertiary surfaces */
-  --highlight: #f9bc60; /* Highlight (same as accent) */
+  --secondary: #1d2e2a; /* Dark moss surface */
+  --tertiary: #2a3f3a; /* Slightly lighter layer */
+  --highlight: #6fbf73; /* Same as accent */
 }
