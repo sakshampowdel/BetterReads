@@ -7,5 +7,6 @@ export async function fetchAuthors(
 ): Promise<Paginated<Author>> {
   const res = await fetch(`/api/authors?page=${page}&size=${size}`);
   if (!res.ok) throw new Error("Failed to fetch authors");
-  return res.json();
+  const data = await res.json();
+  return data;
 }
