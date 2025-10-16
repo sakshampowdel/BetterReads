@@ -1,2 +1,3 @@
 export * from "./booksApi";
 export * from "./authorsApi";
+export * from "./usersApi";
