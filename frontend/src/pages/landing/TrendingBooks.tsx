@@ -13,7 +13,6 @@ const TrendingBooks = () => {
     fetchBooks(PAGE_NUMBER, PAGE_SIZE, "")
       .then((data) => {
         setBooks(data.data);
-        console.log("Books resposne:", data.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
