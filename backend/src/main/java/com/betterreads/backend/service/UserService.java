@@ -3,6 +3,7 @@ package com.betterreads.backend.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.betterreads.backend.dto.LoginRequestDto;
 import com.betterreads.backend.dto.UserRequestDto;
 import com.betterreads.backend.dto.UserResponseDto;
 import com.betterreads.backend.exception.InvalidCredentialsException;
@@ -39,13 +40,13 @@ public class UserService {
     return mapToResponseDto(user);
   }
 
-  public UserResponseDto loginUser(UserRequestDto userRequestDto) {
-    String email = userRequestDto.getEmail();
+  public UserResponseDto loginUser(LoginRequestDto loginRequestDto) {
+    String email = loginRequestDto.getEmail();
 
     User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UserNotFoundException("Invalid Credentials!"));
 
-    String password = userRequestDto.getPassword();
+    String password = loginRequestDto.getPassword();
 
     if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new InvalidCredentialsException("Invalid Credentials!");

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betterreads.backend.dto.JwtResponseDto;
+import com.betterreads.backend.dto.LoginRequestDto;
 import com.betterreads.backend.dto.UserRequestDto;
 import com.betterreads.backend.dto.UserResponseDto;
 import com.betterreads.backend.model.User;
@@ -39,8 +40,8 @@ public class UserController {
 
   @PostMapping("/login")
   public ResponseEntity<JwtResponseDto> loginUser(
-      @Valid @RequestBody UserRequestDto userRequestDto) {
-    UserResponseDto userResponseDto = userService.loginUser(userRequestDto);
+      @Valid @RequestBody LoginRequestDto loginRequestDto) {
+    UserResponseDto userResponseDto = userService.loginUser(loginRequestDto);
     String token = jwtService.generateToken(userResponseDto.getEmail(), userResponseDto.getDisplayName());
     return ResponseEntity.ok(new JwtResponseDto(token, userResponseDto));
   }
