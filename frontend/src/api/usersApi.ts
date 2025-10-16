@@ -12,7 +12,10 @@ export async function registerUser(user: UserRequest): Promise<JwtResponse> {
   if (!res.ok) throw new Error("Failed to register user");
 
   const data = await res.json();
-  return data;
+  return {
+    token: data.token,
+    user: data.userResponseDto,
+  };
 }
 
 export async function loginUser(user: LoginUser): Promise<JwtResponse> {
@@ -27,5 +30,8 @@ export async function loginUser(user: LoginUser): Promise<JwtResponse> {
   if (!res.ok) throw new Error("Failed to login user");
 
   const data = await res.json();
-  return data;
+  return {
+    token: data.token,
+    user: data.userResponseDto,
+  };
 }
