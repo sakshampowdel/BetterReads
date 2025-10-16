@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 const Navbar = () => {
   const [theme, setTheme] = useState<"light" | "dark">(
     () => (localStorage.getItem("theme") as "light" | "dark") || "light"
   );
   const [menu, setMenu] = useState(false);
+
+  const { authState, logout } = useAuth();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -48,9 +51,31 @@ const Navbar = () => {
               My Books
             </NavLink>
           </li>
-          <li className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity">
-            <Link to="/login">Login</Link>
-          </li>
+          {authState.user ? (
+            <li className="flex items-center space-x-8">
+              <span>
+                Welcome,{" "}
+                <span className="font-semibold text-accent">
+                  {authState.user.displayName}
+                </span>
+              </span>
+              <button
+                className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </li>
+          ) : (
+            <li>
+              <Link
+                to="/login"
+                className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+              >
+                Login
+              </Link>
+            </li>
+          )}
           <li>
             <ThemeToggle theme={theme} setTheme={setTheme}></ThemeToggle>
           </li>
@@ -106,11 +131,29 @@ const Navbar = () => {
                   My Books
                 </NavLink>
               </li>
-              <li className="hover:cursor-pointer bg-accent text-accent-foreground p-2 px-4 w-fit rounded-xl">
-                <Link to="/login" onClick={() => setMenu(false)}>
-                  Login
-                </Link>
-              </li>
+              {authState.user ? (
+                <li>
+                  <button
+                    className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                    onClick={() => {
+                      logout();
+                      setMenu(false);
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              ) : (
+                <li>
+                  <Link
+                    to="/login"
+                    className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                    onClick={() => setMenu(false)}
+                  >
+                    Login
+                  </Link>
+                </li>
+              )}
               <li>
                 <ThemeToggle theme={theme} setTheme={setTheme}></ThemeToggle>
               </li>
