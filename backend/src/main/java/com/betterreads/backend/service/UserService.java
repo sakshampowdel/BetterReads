@@ -9,16 +9,21 @@ import com.betterreads.backend.dto.UserResponseDto;
 import com.betterreads.backend.exception.InvalidCredentialsException;
 import com.betterreads.backend.exception.UserAlreadyExistsException;
 import com.betterreads.backend.exception.UserNotFoundException;
+import com.betterreads.backend.model.Profile;
 import com.betterreads.backend.model.User;
+import com.betterreads.backend.repository.ProfileRepository;
 import com.betterreads.backend.repository.UserRepository;
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
+  private final ProfileRepository profileRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, ProfileRepository profileRepository,
+      PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
+    this.profileRepository = profileRepository;
     this.passwordEncoder = passwordEncoder;
   }
 
@@ -36,6 +41,10 @@ public class UserService {
     User user = new User(username, email, hashedPassword);
 
     userRepository.save(user);
+
+    Profile profile = new Profile(user.getDisplayName(), "", user);
+
+    profileRepository.save(profile);
 
     return mapToResponseDto(user);
   }
