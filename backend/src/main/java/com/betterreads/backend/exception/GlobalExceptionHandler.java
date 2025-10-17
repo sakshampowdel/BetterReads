@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
   }
 
   // Profile Exceptions
-  @ExceptionHandler(UserNotFoundException.class)
+  @ExceptionHandler(ProfileNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleProfileNotFound(ProfileNotFoundException ex, HttpServletRequest request) {
     return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
   }
