@@ -32,4 +32,5 @@ public class ProfileController {
     ProfileResponseDto profileResponseDto = profileService.getProfileByUser(user);
     return ResponseEntity.ok(profileResponseDto);
   }
+
 }
