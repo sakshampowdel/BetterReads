@@ -17,7 +17,7 @@ public class Review {
   private Book book;
 
   @ManyToOne(optional = false)
-  private User user;
+  private Profile profile;
 
   private int rating; // 1–5
   @Column(length = 5000)
@@ -26,9 +26,9 @@ public class Review {
   protected Review() {
   }
 
-  public Review(Book book, User user, int rating, String comment) {
+  public Review(Book book, Profile profile, int rating, String comment) {
     this.book = book;
-    this.user = user;
+    this.profile = profile;
     this.rating = rating;
     this.comment = comment;
   }
@@ -41,8 +41,8 @@ public class Review {
     return book;
   }
 
-  public User getUser() {
-    return user;
+  public Profile getProfile() {
+    return profile;
   }
 
   public int getRating() {
@@ -57,8 +57,8 @@ public class Review {
     this.book = book;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setProfile(Profile profile) {
+    this.profile = profile;
   }
 
   public void setRating(int rating) {
