@@ -41,6 +41,25 @@ public class GlobalExceptionHandler {
     return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
   }
 
+  // Profile Exceptions
+  @ExceptionHandler(UserNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleProfileNotFound(ProfileNotFoundException ex, HttpServletRequest request) {
+    return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+  }
+
+  // BookList Exceptions
+  @ExceptionHandler(BookListNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleBookListNotFound(BookListNotFoundException ex,
+      HttpServletRequest request) {
+    return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+  }
+
+  @ExceptionHandler(UnauthorizedBookListAccessException.class)
+  public ResponseEntity<ErrorResponse> handleUnauthorizedBookListAccess(
+      UnauthorizedBookListAccessException ex, HttpServletRequest request) {
+    return buildErrorResponse(ex, HttpStatus.FORBIDDEN, request);
+  }
+
   // Generic
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {
