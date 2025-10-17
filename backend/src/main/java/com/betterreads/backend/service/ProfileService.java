@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.betterreads.backend.dto.BookListPreviewDto;
 import com.betterreads.backend.dto.BookPreviewDto;
 import com.betterreads.backend.dto.ProfileResponseDto;
+import com.betterreads.backend.exception.ProfileNotFoundException;
 import com.betterreads.backend.exception.UserNotFoundException;
 import com.betterreads.backend.model.Book;
 import com.betterreads.backend.model.Profile;
@@ -33,7 +34,7 @@ public class ProfileService {
 
   public ProfileResponseDto getProfileById(Long profileId) {
     Profile profile = profileRepository.findById(profileId)
-        .orElseThrow(() -> new RuntimeException("Profile not found"));
+        .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
     List<BookListPreviewDto> limitedBookList = profile.getBookLists().stream()
         .limit(MAX_BOOKLISTS)

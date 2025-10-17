@@ -11,6 +11,7 @@ import com.betterreads.backend.dto.PaginatedResponseDto;
 import com.betterreads.backend.dto.ReviewRequestDto;
 import com.betterreads.backend.dto.ReviewResponseDto;
 import com.betterreads.backend.exception.BookNotFoundException;
+import com.betterreads.backend.exception.ProfileNotFoundException;
 import com.betterreads.backend.model.Book;
 import com.betterreads.backend.model.Profile;
 import com.betterreads.backend.model.Review;
@@ -34,7 +35,7 @@ public class ReviewService {
 
   public ReviewResponseDto createReview(ReviewRequestDto reviewRequestDto, User user) {
     Profile profile = profileRepository.findByUser(user)
-        .orElseThrow(() -> new RuntimeException("Profile not found for user"));
+        .orElseThrow(() -> new ProfileNotFoundException("Profile not found for user"));
 
     Book book = bookRepository.findById(reviewRequestDto.getBookId())
         .orElseThrow(() -> new BookNotFoundException("Book not found"));
