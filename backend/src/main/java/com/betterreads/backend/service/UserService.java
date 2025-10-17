@@ -55,13 +55,6 @@ public class UserService {
     return mapToResponseDto(user);
   }
 
-  public UserResponseDto getUserProfile(String displayName) {
-    User user = userRepository.findByDisplayName(displayName)
-        .orElseThrow(() -> new UserNotFoundException("User: " + displayName + " not found!"));
-
-    return mapToResponseDto(user);
-  }
-
   public UserResponseDto mapToResponseDto(User user) {
     return new UserResponseDto(user.getId(), user.getDisplayName(), user.getEmail());
   }
