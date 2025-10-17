@@ -19,7 +19,7 @@ const Hero = () => {
           Connect with other book lovers without the dated feel!
         </p>
         <button className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity">
-          <Link to="/login">Join Us!</Link>
+          <Link to="/register">Join Us!</Link>
         </button>
       </div>
     </section>
