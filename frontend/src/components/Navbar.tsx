@@ -41,7 +41,7 @@ const Navbar = () => {
           </li>
           <li className="hover:cursor-pointer">
             <NavLink
-              to="/mybooks"
+              to="/profile"
               className={({ isActive }) =>
                 `hover:cursor-pointer ${
                   isActive ? "text-accent underline" : ""
@@ -120,7 +120,7 @@ const Navbar = () => {
               </li>
               <li className="hover:cursor-pointer">
                 <NavLink
-                  to="/mybooks"
+                  to="/profile"
                   onClick={() => setMenu(false)}
                   className={({ isActive }) =>
                     `hover:cursor-pointer ${
