@@ -23,39 +23,37 @@ import jakarta.validation.Valid;
 public class AuthorController {
   private final AuthorService authorService;
 
-  public AuthorController(final AuthorService authorService) {
+  public AuthorController(AuthorService authorService) {
     this.authorService = authorService;
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<AuthorResponseDto> getAuthor(@PathVariable Long id) {
-    AuthorResponseDto authorResponseDto = authorService.getAuthorById(id);
-    return ResponseEntity.ok(authorResponseDto);
+  public ResponseEntity<AuthorResponseDto> getAuthorById(@PathVariable Long id) {
+    AuthorResponseDto response = authorService.getAuthorById(id);
+    return ResponseEntity.ok(response);
   }
 
-  @GetMapping()
-  public ResponseEntity<PaginatedResponseDto<AuthorResponseDto>> getAuthors(Pageable pageable) {
-    PaginatedResponseDto<AuthorResponseDto> paginatedResponseDto = authorService.getAllAuthors(pageable);
-    return ResponseEntity.ok(paginatedResponseDto);
+  @GetMapping
+  public ResponseEntity<PaginatedResponseDto<AuthorResponseDto>> getAllAuthors(Pageable pageable) {
+    PaginatedResponseDto<AuthorResponseDto> response = authorService.getAllAuthors(pageable);
+    return ResponseEntity.ok(response);
   }
 
-  @PostMapping()
-  public ResponseEntity<AuthorResponseDto> createAuthor(
-      @Valid @RequestBody AuthorRequestDto authorRequestDto) {
-    AuthorResponseDto authorResponseDto = authorService.createAuthor(authorRequestDto);
-    return ResponseEntity.status(201).body(authorResponseDto);
+  @PostMapping
+  public ResponseEntity<AuthorResponseDto> createAuthor(@Valid @RequestBody AuthorRequestDto dto) {
+    AuthorResponseDto response = authorService.createAuthor(dto);
+    return ResponseEntity.status(201).body(response);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<AuthorResponseDto> updateAuthor(
-      @PathVariable Long id,
-      @Valid @RequestBody AuthorRequestDto authorRequestDto) {
-    AuthorResponseDto authorResponseDto = authorService.updateAuthorById(id, authorRequestDto);
-    return ResponseEntity.ok(authorResponseDto);
+  public ResponseEntity<AuthorResponseDto> updateAuthorById(@PathVariable Long id,
+      @Valid @RequestBody AuthorRequestDto dto) {
+    AuthorResponseDto response = authorService.updateAuthorById(id, dto);
+    return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteAuthorById(@PathVariable Long id) {
     authorService.deleteAuthorById(id);
     return ResponseEntity.noContent().build();
   }

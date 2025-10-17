@@ -1,6 +1,5 @@
 package com.betterreads.backend.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -17,8 +16,8 @@ import com.betterreads.backend.model.Profile;
 import com.betterreads.backend.model.Review;
 import com.betterreads.backend.model.User;
 import com.betterreads.backend.repository.BookRepository;
-import com.betterreads.backend.repository.ReviewRepository;
 import com.betterreads.backend.repository.ProfileRepository;
+import com.betterreads.backend.repository.ReviewRepository;
 
 @Service
 public class ReviewService {
@@ -33,34 +32,36 @@ public class ReviewService {
     this.profileRepository = profileRepository;
   }
 
-  public ReviewResponseDto createReview(ReviewRequestDto reviewRequestDto, User user) {
+  public ReviewResponseDto createReview(ReviewRequestDto dto, User user) {
     Profile profile = profileRepository.findByUser(user)
-        .orElseThrow(() -> new ProfileNotFoundException("Profile not found for user"));
-
-    Book book = bookRepository.findById(reviewRequestDto.getBookId())
+        .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
+    Book book = bookRepository.findById(dto.getBookId())
         .orElseThrow(() -> new BookNotFoundException("Book not found"));
 
-    Review review = new Review(book, profile, reviewRequestDto.getRating(), reviewRequestDto.getComment());
+    Review review = new Review(book, profile, dto.getRating(), dto.getComment());
     reviewRepository.save(review);
-
-    return mapToResponseDto(review);
+    return mapToDto(review);
   }
 
   public PaginatedResponseDto<ReviewResponseDto> getReviewsForBook(Long bookId, Pageable pageable) {
     Page<Review> page = reviewRepository.findByBook_Id(bookId, pageable);
-    List<Review> reviews = page.getContent();
-    List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+    List<ReviewResponseDto> reviews = page.getContent().stream()
+        .map(this::mapToDto)
+        .toList();
 
-    for (Review review : reviews) {
-      reviewResponseDtos.add(mapToResponseDto(review));
-    }
-
-    return new PaginatedResponseDto<>(reviewResponseDtos, page.getNumber(), page.getSize(), page.getTotalPages(),
+    return new PaginatedResponseDto<>(
+        reviews,
+        page.getNumber(),
+        page.getSize(),
+        page.getTotalPages(),
         page.getTotalElements());
   }
 
-  public ReviewResponseDto mapToResponseDto(Review review) {
-    return new ReviewResponseDto(review.getId(), review.getProfile().getDisplayName(), review.getRating(),
+  private ReviewResponseDto mapToDto(Review review) {
+    return new ReviewResponseDto(
+        review.getId(),
+        review.getProfile().getDisplayName(),
+        review.getRating(),
         review.getComment());
   }
 }
