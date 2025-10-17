@@ -23,6 +23,10 @@ public class SecurityConfig {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
+            // --- Authenticated endpoints ---
+            .requestMatchers("/api/users/me").authenticated()
+            .requestMatchers(HttpMethod.POST, "/api/reviews").authenticated()
+
             // --- Public endpoints ---
             .requestMatchers(
                 "/api/users/register",
@@ -31,12 +35,9 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET,
                 "/api/books/**",
                 "/api/authors/**",
-                "/api/reviews/book/**")
+                "/api/reviews/book/**",
+                "/api/profiles/**")
             .permitAll()
-
-            // --- Authenticated endpoints ---
-            .requestMatchers("/api/users/me").authenticated()
-            .requestMatchers(HttpMethod.POST, "/api/reviews").authenticated()
 
             // --- Default: secure everything else ---
             .anyRequest().authenticated())
