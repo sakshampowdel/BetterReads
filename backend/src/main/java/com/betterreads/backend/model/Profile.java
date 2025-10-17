@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Profile {
   @Id
-  @GeneratedValue
   private Long id;
   private String displayName;
   private String bio;
   @OneToOne
+  @MapsId
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
   @OneToMany
