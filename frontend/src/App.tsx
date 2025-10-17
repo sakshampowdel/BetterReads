@@ -7,6 +7,8 @@ import NotFound from "./pages/errors/NotFound";
 import BookDetails from "./pages/book/BookDetails";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
+import ProfilePage from "./pages/profile/ProfilePage";
+import MyProfileRedirect from "./pages/profile/MyProfileRedirect";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/book/:id" element={<BookDetails />} />
+          <Route path="/profile" element={<MyProfileRedirect />} />
+          <Route path="/profiles/:id" element={<ProfilePage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
