@@ -7,3 +7,15 @@ export type Book = {
   openLibraryId: string;
   description: string;
 };
+
+export type BookPreview = {
+  id: number;
+  openLibraryId: string;
+  title: string;
+};
+
+export type BookListPreview = {
+  id: number;
+  name: string;
+  books: BookPreview[];
+};
