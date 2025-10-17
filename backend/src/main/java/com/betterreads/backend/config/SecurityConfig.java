@@ -23,10 +23,22 @@ public class SecurityConfig {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
+            // --- Public endpoints ---
+            .requestMatchers(
+                "/api/users/register",
+                "/api/users/login")
+            .permitAll()
+            .requestMatchers(HttpMethod.GET,
+                "/api/books/**",
+                "/api/authors/**",
+                "/api/reviews/book/**")
+            .permitAll()
+
+            // --- Authenticated endpoints ---
             .requestMatchers("/api/users/me").authenticated()
-            .requestMatchers("/api/books/**", "/api/authors/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/reviews").authenticated()
+
+            // --- Default: secure everything else ---
             .anyRequest().authenticated())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
