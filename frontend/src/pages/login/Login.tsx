@@ -18,7 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     if (authState.user) {
-      navigate("/mybooks");
+      navigate("/profile");
     }
   }, [authState.user, navigate]);
 
