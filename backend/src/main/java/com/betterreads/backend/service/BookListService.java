@@ -1,7 +1,11 @@
 package com.betterreads.backend.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.betterreads.backend.dto.BookListResponseDto;
+import com.betterreads.backend.dto.BookPreviewDto;
 import com.betterreads.backend.exception.BookListNotFoundException;
 import com.betterreads.backend.exception.BookNotFoundException;
 import com.betterreads.backend.exception.ProfileNotFoundException;
@@ -27,10 +31,12 @@ public class BookListService {
     this.bookRepository = bookRepository;
   }
 
-  public BookList createBookList(User user, String name) {
+  public BookListResponseDto createBookList(User user, String name) {
     Profile profile = getProfileForUser(user);
     BookList bookList = new BookList(name, profile);
-    return bookListRepository.save(bookList);
+
+    bookListRepository.save(bookList);
+    return mapToDto(bookList);
   }
 
   public void deleteBookList(User user, Long listId) {
@@ -73,5 +79,14 @@ public class BookListService {
   private Book getBook(Long bookId) {
     return bookRepository.findById(bookId)
         .orElseThrow(() -> new BookNotFoundException("Book not found"));
+  }
+
+  private BookListResponseDto mapToDto(BookList bookList) {
+    List<BookPreviewDto> bookDtos = bookList.getBooks().stream()
+        .limit(5)
+        .map(b -> new BookPreviewDto(b.getId(), b.getOpenLibraryId(), b.getTitle()))
+        .toList();
+
+    return new BookListResponseDto(bookList.getId(), bookList.getName(), bookDtos);
   }
 }
