@@ -18,6 +18,7 @@ import com.betterreads.backend.repository.ProfileRepository;
 @Service
 public class ProfileService {
   private final ProfileRepository profileRepository;
+
   private static final int MAX_BOOKLISTS = 5;
   private static final int MAX_BOOKS_PER_LIST = 5;
 
@@ -28,27 +29,38 @@ public class ProfileService {
   public ProfileResponseDto getProfileByUser(User user) {
     Profile profile = profileRepository.findByUser(user)
         .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-    return getProfileById(profile.getId());
+    return mapToDto(profile);
   }
 
   public ProfileResponseDto getProfileById(Long profileId) {
     Profile profile = profileRepository.findById(profileId)
         .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
+    return mapToDto(profile);
+  }
 
-    List<BookListPreviewDto> limitedBookList = profile.getBookLists().stream()
+  private ProfileResponseDto mapToDto(Profile profile) {
+    List<BookListPreviewDto> bookListPreviews = profile.getBookLists().stream()
         .limit(MAX_BOOKLISTS)
-        .map(bookList -> new BookListPreviewDto(bookList.getId(), bookList.getName(),
-            mapBooksToPreview(bookList.getBooks())))
+        .map(list -> new BookListPreviewDto(
+            list.getId(),
+            list.getName(),
+            mapBooksToPreview(list.getBooks())))
         .collect(Collectors.toList());
 
-    return new ProfileResponseDto(profile.getId(), profile.getDisplayName(), profile.getBio(), limitedBookList);
+    return new ProfileResponseDto(
+        profile.getId(),
+        profile.getDisplayName(),
+        profile.getBio(),
+        bookListPreviews);
   }
 
   private List<BookPreviewDto> mapBooksToPreview(List<Book> books) {
     return books.stream()
         .limit(MAX_BOOKS_PER_LIST)
-        .map(book -> new BookPreviewDto(book.getId(), book.getOpenLibraryId(), book.getTitle()))
+        .map(book -> new BookPreviewDto(
+            book.getId(),
+            book.getOpenLibraryId(),
+            book.getTitle()))
         .collect(Collectors.toList());
   }
 }

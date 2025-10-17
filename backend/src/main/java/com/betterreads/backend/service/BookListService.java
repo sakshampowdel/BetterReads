@@ -24,8 +24,11 @@ public class BookListService {
   private final ProfileRepository profileRepository;
   private final BookRepository bookRepository;
 
-  public BookListService(BookListRepository bookListRepository, ProfileRepository profileRepository,
+  public BookListService(
+      BookListRepository bookListRepository,
+      ProfileRepository profileRepository,
       BookRepository bookRepository) {
+
     this.bookListRepository = bookListRepository;
     this.profileRepository = profileRepository;
     this.bookRepository = bookRepository;
@@ -33,31 +36,41 @@ public class BookListService {
 
   public BookListResponseDto createBookList(User user, String name) {
     Profile profile = getProfileForUser(user);
-    BookList bookList = new BookList(name, profile);
 
+    if (profile.getBookLists().size() >= 5) {
+      throw new IllegalStateException("You can only have up to 5 booklists.");
+    }
+
+    BookList bookList = new BookList(name, profile);
     bookListRepository.save(bookList);
     return mapToDto(bookList);
   }
 
-  public void deleteBookList(User user, Long listId) {
-    BookList bookList = getOwnedBookList(user, listId);
+  public void deleteBookList(Long listId, User user) {
+    BookList bookList = getOwnedBookList(listId, user);
     bookListRepository.delete(bookList);
   }
 
-  public void addBookToList(User user, Long listId, Long bookId) {
-    BookList bookList = getOwnedBookList(user, listId);
+  public void addBookToList(Long listId, Long bookId, User user) {
+    BookList bookList = getOwnedBookList(listId, user);
     Book book = getBook(bookId);
 
     bookList.addBook(book);
     bookListRepository.save(bookList);
   }
 
-  public void removeBookFromList(User user, Long listId, Long bookId) {
-    BookList bookList = getOwnedBookList(user, listId);
+  public void removeBookFromList(Long listId, Long bookId, User user) {
+    BookList bookList = getOwnedBookList(listId, user);
     Book book = getBook(bookId);
 
     bookList.removeBook(book);
     bookListRepository.save(bookList);
+  }
+
+  public BookListResponseDto getBookListById(Long id) {
+    BookList bookList = bookListRepository.findById(id)
+        .orElseThrow(() -> new BookListNotFoundException("Book list not found"));
+    return mapToDto(bookList);
   }
 
   private Profile getProfileForUser(User user) {
@@ -65,7 +78,7 @@ public class BookListService {
         .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
   }
 
-  private BookList getOwnedBookList(User user, Long listId) {
+  private BookList getOwnedBookList(Long listId, User user) {
     Profile profile = getProfileForUser(user);
     BookList bookList = bookListRepository.findById(listId)
         .orElseThrow(() -> new BookListNotFoundException("Book list not found"));
@@ -73,6 +86,7 @@ public class BookListService {
     if (!bookList.getProfile().getId().equals(profile.getId())) {
       throw new UnauthorizedBookListAccessException("You do not have permission to modify this list.");
     }
+
     return bookList;
   }
 
@@ -89,4 +103,5 @@ public class BookListService {
 
     return new BookListResponseDto(bookList.getId(), bookList.getName(), bookDtos);
   }
+
 }
