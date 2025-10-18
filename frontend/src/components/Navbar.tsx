@@ -17,6 +17,10 @@ const Navbar = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    document.body.style.overflow = menu ? "hidden" : "auto";
+  }, [menu]);
+
   return (
     <nav className="bg-background sticky top-0 z-50 text-xl font-semibold">
       <div className="flex min-h-1.5 bg-accent"></div>
@@ -83,82 +87,92 @@ const Navbar = () => {
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden flex flex-col px-4">
-        <div className="flex justify-between px-6 py-6 items-center">
-          <h1 className="hover:cursor-pointer text-foreground">
+      <div className="md:hidden relative z-50">
+        {/* Top bar */}
+        <div className="flex justify-between px-4 py-5 items-center relative z-50">
+          <h1 className="text-foreground text-2xl font-bold">
             <Link to="/" onClick={() => setMenu(false)}>
               BetterReads
             </Link>
           </h1>
+
           {menu ? (
             <X
-              className="hover:cursor-pointer"
+              className="hover:cursor-pointer transition-transform duration-200 active:scale-90"
               onClick={() => setMenu(false)}
             />
           ) : (
             <Menu
-              className="hover:cursor-pointer"
+              className="hover:cursor-pointer transition-transform duration-200 active:scale-90"
               onClick={() => setMenu(true)}
             />
           )}
         </div>
-        <div className="overflow-hidden">
-          {menu && (
-            <ul className="flex flex-col justify-evenly gap-6 items-center min-h-screen text-2xl">
-              <li className="hover:cursor-pointer">
-                <NavLink
-                  to="/browse"
-                  onClick={() => setMenu(false)}
-                  className={({ isActive }) =>
-                    `hover:cursor-pointer ${
-                      isActive ? "text-accent underline" : ""
-                    }`
-                  }
-                >
-                  Browse
-                </NavLink>
-              </li>
-              <li className="hover:cursor-pointer">
-                <NavLink
-                  to="/profile"
-                  onClick={() => setMenu(false)}
-                  className={({ isActive }) =>
-                    `hover:cursor-pointer ${
-                      isActive ? "text-accent underline" : ""
-                    }`
-                  }
-                >
-                  My Books
-                </NavLink>
-              </li>
-              {authState.user ? (
-                <li>
-                  <button
-                    className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
-                    onClick={() => {
-                      logout();
-                      setMenu(false);
-                    }}
-                  >
-                    Logout
-                  </button>
-                </li>
-              ) : (
-                <li>
-                  <Link
-                    to="/login"
-                    className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
-                    onClick={() => setMenu(false)}
-                  >
-                    Login
-                  </Link>
-                </li>
-              )}
+
+        {/* Mobile Menu Overlay */}
+        <div
+          className={`fixed inset-0 bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center gap-8 text-xl transition-all duration-300 ease-in-out ${
+            menu ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
+          style={{ zIndex: 40 }} // keeps it below the top bar but above the page
+        >
+          <ul className="flex flex-col items-center gap-6">
+            <li>
+              <NavLink
+                to="/browse"
+                onClick={() => setMenu(false)}
+                className={({ isActive }) =>
+                  `hover:cursor-pointer ${
+                    isActive ? "text-accent underline" : ""
+                  }`
+                }
+              >
+                Browse
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/profile"
+                onClick={() => setMenu(false)}
+                className={({ isActive }) =>
+                  `hover:cursor-pointer ${
+                    isActive ? "text-accent underline" : ""
+                  }`
+                }
+              >
+                My Books
+              </NavLink>
+            </li>
+
+            {authState.user ? (
               <li>
-                <ThemeToggle theme={theme} setTheme={setTheme}></ThemeToggle>
+                <button
+                  className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                  onClick={() => {
+                    logout();
+                    setMenu(false);
+                  }}
+                >
+                  Logout
+                </button>
               </li>
-            </ul>
-          )}
+            ) : (
+              <li>
+                <Link
+                  to="/login"
+                  className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+                  onClick={() => setMenu(false)}
+                >
+                  Login
+                </Link>
+              </li>
+            )}
+
+            <li>
+              <ThemeToggle theme={theme} setTheme={setTheme} />
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
