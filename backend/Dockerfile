@@ -1,14 +1,28 @@
-# Dev-only Dockerfile
-FROM maven:3.9.9-eclipse-temurin-21
+# ==============================
+# Backend Dockerfile
+# ==============================
 
+# --- Build Stage ---
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 WORKDIR /app
 
-# Copy pom.xml and download dependencies first (cached layer)
+# Copy Maven config and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# Copy source code
+# Copy source code and build the JAR
 COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Default command runs Spring Boot in dev mode
-CMD ["mvn", "spring-boot:run"]
+# --- Runtime Stage ---
+FROM eclipse-temurin:21-jdk AS runtime
+WORKDIR /app
+
+# Copy the built JAR from the previous stage
+COPY --from=builder /app/target/*.jar app.jar
+
+# Expose Spring Boot port
+EXPOSE 8080
+
+# Run the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]
