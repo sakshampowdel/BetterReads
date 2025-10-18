@@ -7,12 +7,12 @@ const BookPicture = ({ book }: { book: Book }) => {
     <div>
       {!imgError ? (
         <img
-          className=""
+          className="max-h-[350px] w-auto rounded-lg shadow-md"
           src={`https://covers.openlibrary.org/w/olid/${book.openLibraryId}-M.jpg?default=false`}
           onError={() => setImgError(true)}
         />
       ) : (
-        <div className="h-75 w-50 bg-gradient-to-br from-accent/30 via-accent/10 to-gray-800 flex items-end p-3 text-foreground">
+        <div className="h-75 w-50 bg-gradient-to-br from-accent/30 via-accent/10 to-gray-800 flex items-end p-3 text-foreground max-h-[350px] rounded-lg shadow-md">
           <span className="text-sm font-medium truncate">{book.title}</span>
         </div>
       )}
