@@ -25,7 +25,8 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             // --- Authenticated endpoints ---
             .requestMatchers("/api/users/me").authenticated()
-            .requestMatchers(HttpMethod.POST, "/api/reviews").authenticated()
+            .requestMatchers(HttpMethod.POST, "/api/reviews", "/api/booklists/**").authenticated()
+            .requestMatchers(HttpMethod.DELETE, "/api/booklists/**").authenticated()
 
             // --- Public endpoints ---
             .requestMatchers(
@@ -36,7 +37,8 @@ public class SecurityConfig {
                 "/api/books/**",
                 "/api/authors/**",
                 "/api/reviews/book/**",
-                "/api/profiles/**")
+                "/api/profiles/**",
+                "/api/booklists/**")
             .permitAll()
 
             // --- Default: secure everything else ---
