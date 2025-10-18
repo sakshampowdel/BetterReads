@@ -5,22 +5,27 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="p-24 px-48 grid grid-cols-2 max-lg:grid-cols-1 items-center gap-20 max-md:px-2"
+      className="pt-24 pb-32 px-6 md:px-16 lg:px-32 grid grid-cols-1 md:grid-cols-2 items-center gap-16"
     >
-      <div className="flex justify-center">
-        <LibraryBig className="h-full max-h-70 min-w-full" />
+      {/* Icon side */}
+      <div className="flex justify-center md:justify-end">
+        <LibraryBig className="w-2/3 max-w-sm h-auto text-accent" />
       </div>
 
-      <div className="flex flex-col gap-10 flex-wrap items-center text-center">
-        <h1 className="text-foreground font-bold text-8xl max-lg:text-6xl">
+      {/* Text side */}
+      <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
+        <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-foreground">
           Read Better.
         </h1>
-        <p className="text-muted text-2xl">
-          Connect with other book lovers without the dated feel!
+        <p className="text-muted text-xl md:text-2xl max-w-lg">
+          Connect with other book lovers — without the dated feel.
         </p>
-        <button className="bg-accent text-accent-foreground font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity">
-          <Link to="/register">Join Us!</Link>
-        </button>
+        <Link
+          to="/register"
+          className="bg-accent text-accent-foreground text-lg font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition"
+        >
+          Join Us
+        </Link>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import BookPicture from "../../components/BookPicture";
 import ReactMarkdown from "react-markdown";
 import AddToListButton from "./AddToListButton";
 import BookReviews from "./BookReviews";
+import NotFoundPage from "../errors/NotFound";
 
 function checkId({ id }: { id: string | undefined }) {
   if (id === undefined) return -1;
@@ -26,13 +27,7 @@ const BookDetails = () => {
       .catch((err) => console.error(err));
   }, [id]);
 
-  if (!book) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold text-muted">Book Not Found!</h1>
-      </main>
-    );
-  }
+  if (!book) return <NotFoundPage message="Book not found." />;
 
   return (
     <main className="min-h-screen bg-background text-foreground py-10 px-6 flex flex-col items-center">

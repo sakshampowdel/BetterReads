@@ -5,6 +5,8 @@ import { fetchProfileById } from "../../api";
 import CreateBookList from "./CreateBookList";
 import BookListCard from "../../components/BookListCard";
 import { useAuth } from "../../context/useAuth";
+import ErrorPage from "../errors/ErrorPages";
+import NotFoundPage from "../errors/NotFound";
 
 function checkId(id: string | undefined): number {
   if (!id) return -1;
@@ -60,23 +62,8 @@ const ProfilePage = () => {
     if (newId !== -1) loadProfile(newId);
   }, [id]);
 
-  if (error) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl text-highlight font-medium">{error}</h1>
-      </main>
-    );
-  }
-
-  if (!profile) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-semibold text-muted">
-          Profile Not Found!
-        </h1>
-      </main>
-    );
-  }
+  if (error) return <ErrorPage message={error} />;
+  if (!profile) return <NotFoundPage message="Profile not found." />;
 
   return (
     <main className="min-h-screen bg-background text-foreground p-6 md:p-10">
