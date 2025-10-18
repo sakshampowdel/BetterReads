@@ -1,7 +1,11 @@
 import { useAuth } from "../../context/useAuth";
 import { useState } from "react";
 
-function CreateBookList() {
+type Props = {
+  onListCreated?: () => void;
+};
+
+function CreateBookList({ onListCreated }: Props) {
   const { authState } = useAuth();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -21,8 +25,10 @@ function CreateBookList() {
       });
 
       if (!res.ok) throw new Error("Failed to create list");
+
       setMessage("List created successfully!");
       setName("");
+      onListCreated?.();
     } catch {
       setMessage("Error creating list");
     }
