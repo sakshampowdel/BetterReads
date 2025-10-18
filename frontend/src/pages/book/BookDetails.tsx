@@ -5,6 +5,7 @@ import type { Book } from "../../types/Book";
 import BookPicture from "../../components/BookPicture";
 import ReactMarkdown from "react-markdown";
 import AddToListButton from "./AddToListButton";
+import BookReviews from "./BookReviews";
 
 function checkId({ id }: { id: string | undefined }) {
   if (id === undefined) return -1;
@@ -34,38 +35,41 @@ const BookDetails = () => {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground p-6 md:px-24 lg:px-48 space-y-8">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-center md:items-start">
-        <BookPicture book={book} />
+    <main className="min-h-screen bg-background text-foreground py-10 px-6 flex flex-col items-center">
+      <div className="max-w-3xl w-full space-y-8 text-center">
+        {/* --- Book Cover --- */}
+        <div className="flex justify-center">
+          <BookPicture book={book} />
+        </div>
 
-        <div className="flex-1 space-y-4">
-          {/* Title & Author Section */}
-          <div className="border-b border-tertiary pb-4">
-            <h1 className="text-5xl font-bold text-foreground break-words text-center md:text-left">
-              {book.title}
-            </h1>
-
-            <div className="mt-2">
-              {book.authors.map((author) => (
-                <h2
-                  key={author.name}
-                  className="text-2xl font-light text-muted"
-                >
-                  {author.name}
-                </h2>
-              ))}
-            </div>
-
-            {/* Add To List Section */}
-            <div className="mt-5">
-              <AddToListButton bookId={book.id} />
-            </div>
+        {/* --- Title & Author --- */}
+        <div>
+          <h1 className="text-4xl font-bold leading-tight">{book.title}</h1>
+          <div className="mt-2 space-y-1">
+            {book.authors.map((author) => (
+              <h2
+                key={author.name}
+                className="text-xl font-light text-muted tracking-wide"
+              >
+                {author.name}
+              </h2>
+            ))}
           </div>
+        </div>
 
-          {/* Description */}
-          <div className="max-w-none text-foreground leading-relaxed">
-            <ReactMarkdown>{book.description}</ReactMarkdown>
-          </div>
+        {/* --- Add to List --- */}
+        <div className="flex justify-center">
+          <AddToListButton bookId={book.id} />
+        </div>
+
+        {/* --- Description --- */}
+        <div className="text-left bg-secondary/40 border border-tertiary rounded-xl p-6 shadow-sm leading-relaxed">
+          <ReactMarkdown>{book.description}</ReactMarkdown>
+        </div>
+
+        {/* --- Reviews --- */}
+        <div className="border-t border-tertiary pt-8">
+          <BookReviews bookId={book.id} />
         </div>
       </div>
     </main>
