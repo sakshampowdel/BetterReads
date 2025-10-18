@@ -45,4 +45,24 @@ public class BookListController {
     return ResponseEntity.noContent().build();
   }
 
+  @PostMapping("/{listId}/books/{bookId}")
+  public ResponseEntity<Void> addBookToList(
+      @PathVariable Long listId,
+      @PathVariable Long bookId,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    bookListService.addBookToList(listId, bookId, user);
+    return ResponseEntity.ok().build();
+  }
+
+  @DeleteMapping("/{listId}/books/{bookId}")
+  public ResponseEntity<Void> removeBookFromList(
+      @PathVariable Long listId,
+      @PathVariable Long bookId,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    bookListService.removeBookFromList(listId, bookId, user);
+    return ResponseEntity.noContent().build();
+  }
+
 }

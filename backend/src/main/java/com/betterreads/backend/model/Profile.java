@@ -3,6 +3,7 @@ package com.betterreads.backend.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -20,7 +21,7 @@ public class Profile {
   @MapsId
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
-  @OneToMany
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<BookList> bookLists = new ArrayList<>();
 
   protected Profile() {
@@ -64,12 +65,13 @@ public class Profile {
     this.user = user;
   }
 
-  public void addBookList(BookList booklist) {
-    bookLists.add(booklist);
+  public void addBookList(BookList bookList) {
+    bookLists.add(bookList);
+    bookList.setProfile(this);
   }
 
-  public void removeBookList(BookList booklist) {
-    bookLists.remove(booklist);
+  public void removeBookList(BookList bookList) {
+    bookLists.remove(bookList);
   }
 
 }

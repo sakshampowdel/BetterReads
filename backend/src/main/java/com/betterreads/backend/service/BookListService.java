@@ -37,12 +37,11 @@ public class BookListService {
   public BookListResponseDto createBookList(User user, String name) {
     Profile profile = getProfileForUser(user);
 
-    if (profile.getBookLists().size() >= 5) {
-      throw new IllegalStateException("You can only have up to 5 booklists.");
-    }
-
     BookList bookList = new BookList(name, profile);
-    bookListRepository.save(bookList);
+
+    profile.addBookList(bookList);
+    profileRepository.save(profile);
+
     return mapToDto(bookList);
   }
 

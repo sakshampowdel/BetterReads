@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
@@ -16,6 +17,7 @@ public class BookList {
   private Long id;
   private String name;
   @ManyToOne
+  @JoinColumn(name = "profile_id", nullable = false)
   private Profile profile;
   @ManyToMany
   private List<Book> books = new ArrayList<>();
