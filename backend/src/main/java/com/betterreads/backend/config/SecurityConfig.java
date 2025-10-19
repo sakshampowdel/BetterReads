@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
@@ -21,6 +22,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+        .cors(withDefaults())
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             // --- Authenticated endpoints ---
@@ -39,6 +41,8 @@ public class SecurityConfig {
                 "/api/reviews/book/**",
                 "/api/profiles/**",
                 "/api/booklists/**")
+            .permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/books/**", "/api/authors/**")
             .permitAll()
 
             // --- Default: secure everything else ---
