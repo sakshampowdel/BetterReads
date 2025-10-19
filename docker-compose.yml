@@ -7,11 +7,8 @@ services:
     command: mvn spring-boot:run
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
+    env_file:
+      - .env.dev
     volumes:
       - ./backend:/app
     depends_on:
@@ -35,10 +32,8 @@ services:
   db:
     image: postgres:15
     restart: always
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env.dev
     ports:
       - "5432:5432"
     volumes:
