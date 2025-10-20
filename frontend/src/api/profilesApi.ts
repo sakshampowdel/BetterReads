@@ -1,10 +1,12 @@
 import type { Profile } from "../types/Profile";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function fetchProfileById(
   id: number,
   token?: string
 ): Promise<Profile> {
-  const res = await fetch(`/api/profiles/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/profiles/${id}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 

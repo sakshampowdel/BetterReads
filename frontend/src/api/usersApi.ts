@@ -1,8 +1,10 @@
 import type { JwtResponse } from "../types/Auth";
 import type { LoginUser, UserRequest } from "../types/User";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function registerUser(user: UserRequest): Promise<JwtResponse> {
-  const res = await fetch(`/api/users/register`, {
+  const res = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
@@ -19,7 +21,7 @@ export async function registerUser(user: UserRequest): Promise<JwtResponse> {
 }
 
 export async function loginUser(user: LoginUser): Promise<JwtResponse> {
-  const res = await fetch(`/api/users/login`, {
+  const res = await fetch(`${API_BASE_URL}/api/users/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
